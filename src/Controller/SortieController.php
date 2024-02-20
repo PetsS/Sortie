@@ -10,8 +10,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class SortieController extends AbstractController
 {
     #[Route('/liste', name: '_liste')]
-    public function index(): Response
+    public function listeSortie(): Response
     {
-        return $this->render('sortie/sortieListe.html.twig');
+        return $this->render('sortie/listeSortie.html.twig');
     }
 }
