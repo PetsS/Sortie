@@ -20,7 +20,6 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-
     #[ORM\Column(length: 255)]
     private ?string $mail = null;
 
@@ -39,13 +38,12 @@ class User
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Site $Site = null;
-
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $telephone = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Site $site = null;
 
     public function getId(): ?int
     {
@@ -76,6 +74,17 @@ class User
         return $this;
     }
 
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
 
     public function getMail(): ?string
     {
@@ -151,27 +160,13 @@ class User
 
     public function getSite(): ?Site
     {
-        return $this->Site;
+        return $this->site;
     }
 
-    public function setSite(?Site $Site): static
+    public function setSite(?Site $site): static
     {
-        $this->Site = $Site;
+        $this->site = $site;
 
         return $this;
     }
-
-    public function getTelephone(): ?int
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(int $telephone): static
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
-
-
 }
