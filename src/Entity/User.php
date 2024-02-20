@@ -39,7 +39,7 @@ class User
     private ?string $photo = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $telephone = null;
+    private ?string $telephone = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
