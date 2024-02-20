@@ -20,9 +20,6 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
-    private ?string $telephone = null;
-
     #[ORM\Column(length: 255)]
     private ?string $mail = null;
 
@@ -41,9 +38,12 @@ class User
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\Column(nullable: true)]
+    private ?int $telephone = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Site $Site = null;
+    private ?Site $site = null;
 
     public function getId(): ?int
     {
@@ -70,18 +70,6 @@ class User
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getTelephone(): ?string
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(?string $telephone): static
-    {
-        $this->telephone = $telephone;
 
         return $this;
     }
@@ -158,14 +146,26 @@ class User
         return $this;
     }
 
-    public function getSite(): ?Site
+    public function getTelephone(): ?int
     {
-        return $this->Site;
+        return $this->telephone;
     }
 
-    public function setSite(?Site $Site): static
+    public function setTelephone(?int $telephone): static
     {
-        $this->Site = $Site;
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getSite(): ?Site
+    {
+        return $this->site;
+    }
+
+    public function setSite(?Site $site): static
+    {
+        $this->site = $site;
 
         return $this;
     }
