@@ -20,8 +20,6 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0, nullable: true)]
-    private ?string $telephone = null;
 
     #[ORM\Column(length: 255)]
     private ?string $mail = null;
@@ -44,6 +42,10 @@ class User
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Site $Site = null;
+
+    #[ORM\Column]
+    private ?int $telephone = null;
+
 
     public function getId(): ?int
     {
@@ -74,17 +76,6 @@ class User
         return $this;
     }
 
-    public function getTelephone(): ?string
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(?string $telephone): static
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
 
     public function getMail(): ?string
     {
@@ -169,4 +160,18 @@ class User
 
         return $this;
     }
+
+    public function getTelephone(): ?int
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(int $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+
 }
