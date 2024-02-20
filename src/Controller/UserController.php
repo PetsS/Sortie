@@ -2,10 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Serie;
+use App\Entity\User;
+use App\Form\SerieType;
+use App\Form\UserType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/user', name: 'app_user')]
 class UserController extends AbstractController
@@ -18,8 +26,75 @@ class UserController extends AbstractController
 
     #[Route('/creer', name: '_creer')]
     #[IsGranted('ROLE_ADMIN')]
-    public function creer(): Response
+    public function creer(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
-        return $this->render('user/creerUser.html.twig');
+        $user = new User();
+
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($form->get('photo')->getData() instanceof UploadedFile) {
+                $photoFile = $form->get('photo')->getData();
+                $fileName = $slugger->slug($user->getPseudo()) . '-' . uniqid() . '.' . $photoFile->guessExtension();
+                $photoFile->move($this->getParameter('photo_dir'), $fileName);
+                $user->setPhoto($fileName);
+            }
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'L\'utilisateur a été enregistrée');
+            return $this->redirectToRoute('app_sortie_liste');
+        }
+
+        return $this->render('user/creerUser.html.twig', [
+            'form' => $form
+        ]);
+    }
+
+
+    #[Route('/update/{id}', name: '_update', requirements: ['id' => '\d+'])]
+    public function update(User $user, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    {
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($form->get('photo')->getData() instanceof UploadedFile) {
+                $dir = $this->getParameter('photo_dir');
+                $photoFile = $form->get('photo')->getData();
+                $fileName = $slugger->slug($user->getPseudo()) . '-' . uniqid() . '.' . $photoFile->guessExtension();
+                $photoFile->move($dir, $fileName);
+
+                if ($user->getPhoto() && \file_exists($dir . '/' . $user->getPhoto())) {
+                    unlink($dir . '/' . $user->getPhoto());
+                }
+
+                $user->setPhoto($fileName);
+
+            }
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'L\'utilisateur a été modifié');
+            return $this->redirectToRoute('app_sortie_liste');
+        }
+
+        return $this->render('user/creerUser.html.twig', [
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/supprimer', name: '_supprimer')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function supprimer(): Response
+    {
+        return $this->redirectToRoute('app_sortie_liste');
     }
 }
