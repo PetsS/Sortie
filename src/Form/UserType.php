@@ -27,13 +27,9 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'required' => false,
                 'label' => 'Mail',
-                'attr' => ['autocomplete' => 'email'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter your email',
-                    ]),
-                ],
+                'attr' => ['autocomplete' => 'email']
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -46,11 +42,11 @@ class UserType extends AbstractType
                 'first_options' => [
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Entrez votre mot de passe',
+                            'message' => 'Entrez le mot de passe.',
                         ]),
                         new Length([
                             'min' => 6,
-                            'minMessage' => 'Au moins {{ limit }} caractères',
+                            'minMessage' => 'Au moins {{ limit }} caractères.',
                             'max' => 4096,
                         ]),
                     ],
@@ -75,7 +71,8 @@ class UserType extends AbstractType
                 'required' => false
             ])
             ->add('telephone', TextType::class, [
-                'label' => 'Téléphone'
+                'label' => 'Téléphone',
+                'required' => false
             ])
             ->add('isActif', CheckboxType::class, [
                 'label' => 'Activé',

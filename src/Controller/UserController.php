@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -33,7 +34,7 @@ class UserController extends AbstractController
 
     #[Route('/creer', name: '_creer')]
 //    #[IsGranted('ROLE_ADMIN')]
-    public function creer(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    public function creer(Request $request, EntityManagerInterface $em, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
 
@@ -50,11 +51,19 @@ class UserController extends AbstractController
                 $user->setPhoto($fileName);
             }
 
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
             $em->persist($user);
             $em->flush();
 
             $this->addFlash('success', 'L\'utilisateur a été enregistrée');
-            return $this->redirectToRoute('app_sortie_liste');
+            return $this->redirectToRoute('app_profil', ['id' => $user->getId()]);
         }
 
         return $this->render('user/creerUser.html.twig', [
