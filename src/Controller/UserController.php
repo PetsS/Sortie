@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -13,13 +14,21 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/user', name: 'app_user')]
+#[Route('/profil', name: 'app_profil')]
 class UserController extends AbstractController
 {
-    #[Route('/profil', name: '_profil')]
-    public function profil(): Response
+    #[Route('/{id}', name: '', requirements: ['id' => '\d+'])]
+    public function profil(int $id, UserRepository $userRepository): Response
     {
-        return $this->render('user/profil.html.twig');
+        $user = $userRepository->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException("L'utilisateur n'existe pas!");
+        }
+
+        return $this->render('user/profil.html.twig', [
+            'user' => $user
+        ]);
     }
 
     #[Route('/creer', name: '_creer')]
@@ -55,8 +64,10 @@ class UserController extends AbstractController
 
 
     #[Route('/update/{id}', name: '_update', requirements: ['id' => '\d+'])]
-    public function update(User $user, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    public function update(int $id, UserRepository $userRepository, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
+        $user = $userRepository->find($id);
+
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
@@ -81,18 +92,30 @@ class UserController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'L\'utilisateur a été modifié');
-            return $this->redirectToRoute('app_sortie_liste');
+            return $this->redirectToRoute('app_profil', ['id' => $id]);
         }
 
-        return $this->render('user/creerUser.html.twig', [
-            'form' => $form
+        return $this->render('user/updateUser.html.twig', [
+            'form' => $form,
+            'user' => $user
         ]);
     }
 
-    #[Route('/supprimer', name: '_supprimer')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function supprimer(): Response
+    #[Route('/supprimer/{id}', name: '_supprimer', requirements: ['id' => '\d+'])]
+//    #[IsGranted('ROLE_ADMIN')]
+    public function supprimer(int $id, UserRepository $userRepository, EntityManagerInterface $em): Response
     {
+        $user = $userRepository->find($id);
+
+        $em->remove($user);
+        $em->flush();
+
+        $this->addFlash('success', 'Utilisateur a été supprimer!');
+
         return $this->redirectToRoute('app_sortie_liste');
     }
+
+
+
+
 }
