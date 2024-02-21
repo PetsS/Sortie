@@ -1,17 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr" xml:lang="fr" xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Sortie.com{% endblock %}</title>
+        <link rel="icon" href="{{ asset('img/Eni_Logo.png') }}">
+
         {% block stylesheets %}
         {% endblock %}
 
         {% block javascripts %}
-{% block importmap %}{{ importmap('app') }}{% endblock %}
+            {% block importmap %}
+                {{ importmap('app') }}
+            {% endblock %}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <img src="{{ asset('img/Eni_Logo.png') }}" alt="logo"/>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}"> {{ message }} </div>
+            {% endfor %}
+        {% endfor %}
+        <nav>
+            <ul style="display:flex; flex-direction: row;list-style: none;">
+                {% if is_granted('ROLE_ADMIN') %}
+{#                    <li style="padding: 5px;"><a href="{{ path('app_validation') }}">Validations Sorties</a></li>#}
+                    <li style="padding: 5px;"><a href="{{ path('app_profil_creer') }}">Ajout Utilisateur</a></li>
+{#                    <li style="padding: 5px;"><a href="{{ path('app_campus') }}">Les Campus</a></li>#}
+
+                {% endif %}
+                {% if is_granted('IS_AUTHENTICATED') %}
+                    <li style="padding: 5px;"><a href="{{ path('app_sortie_liste') }}">Sorties</a></li>
+{#                    <li style="padding: 5px;"><a href="{{ path('app_sortie_creer') }}">Créer une sortie</a>#}
+                    <li style="padding: 5px;"><a href="{{ path('app_profil') }}">Mon Profil</a></li>
+{#                    <li style="padding: 5px;"><a href="{{ path('app_logout') }}">Deconnexion</a></li>#}
+                {% else %}
+{#                    <li style="padding: 5px;"><a href="{{ path('app_login') }}">Connexion</a></li>#}
+                {% endif %}
+            </ul>
+        </nav>
+
+        {% block body %}
+        {% endblock %}
+    <footer>
+
+    </footer>
     </body>
 </html>

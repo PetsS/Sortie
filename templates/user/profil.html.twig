@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+
+    <div class="container d-flex justify-content-center">
+        <div class="card" style="width: 30rem;">
+            {% if user.photo %}
+                <img src="{{ asset(photo_dir ~ '/' ~ user.photo) }}" class="card-img-top" alt="image" loading="lazy"/>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">Profil de {{ user.pseudo }}</h5>
+
+                    {% if user.isActif %}
+                        <span class="card-text fst-italic">(Profil activé) </span><i class="bi bi-check-circle text-success"></i>
+                    {% else %}
+                        <span class="card-text fst-italic">(Profil désactivé) </span><i class="bi bi-x-circle text-danger"></i>
+                    {% endif %}
+
+                <p class="card-text">Prenom : {{ user.prenom }}</p>
+                <p class="card-text">Nom : {{ user.nom }}</p>
+                <p class="card-text">Téléphone : {{ user.telephone }}</p>
+                <p class="card-text">Email : {{ user.email }}</p>
+                <p class="card-text fst-italic">Campus : {{ user.site.nom }}</p>
+
+                <div>
+                    <a class="btn btn-secondary" type="button" href="{{ path('app_sortie_liste') }}">Retour</a>
+                    <a class="btn btn-primary" type="button" href="{{ path('app_profil_update', {'id': user.id }) }}">Modifier</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

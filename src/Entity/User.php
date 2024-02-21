@@ -7,9 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: "L'email existe déjà!" )]
+#[UniqueEntity(fields: ['pseudo'], message: "Le pseudo existe déjà!" )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -18,10 +20,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Email( message: 'L\'email {{ value }} n\'est pas un email valid.')]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $email = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    private array $roles = ["ROLE_USER"];
 
     /**
      * @var string The hashed password
@@ -29,27 +33,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50, nullable: false)]
+    #[Assert\Length(min: 3, minMessage: "La longueur doit être au moins de {{ limit }} caractères.")]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50, nullable: false)]
+    #[Assert\Length(min: 3, minMessage: "La longueur doit être au moins de {{ limit }} caractères.")]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 20, unique: true)]
+    #[Assert\Length(max: 20, maxMessage: "La longueur de pseudo doit être moins de {{ limit }} caractères.")]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $pseudo = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 20, nullable: true)]
     private ?string $telephone = null;
 
     #[ORM\Column]
-    private ?bool $isActif = null;
+    private ?bool $isActif = true;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
     #[ORM\ManyToOne(targetEntity:Site::class,inversedBy:'users')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Site $Site = null;
+    #[Assert\NotBlank(message: "Choisissez un campus.")]
+    private ?Site $site = null;
 
     public function getId(): ?int
     {
@@ -195,12 +206,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getSite(): ?Site
     {
-        return $this->Site;
+        return $this->site;
     }
 
-    public function setSite(?Site $Site): static
+    public function setSite(?Site $site): static
     {
-        $this->Site = $Site;
+        $this->site = $site;
 
         return $this;
     }
