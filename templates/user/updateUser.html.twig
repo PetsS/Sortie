@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h1> Création Profil utilisateur </h1>
+    <h1>Mettre à jour {{ user.pseudo }}</h1>
 
     {{ form_start(form) }}
 
@@ -18,7 +18,20 @@
     {{ form_row(form.site) }}
     {{ form_row(form.isActif) }}
 
+
     {{ form_widget(form.return) }} {{ form_widget(form.submit) }}
+{#    {% if is_granted('ROLE_ADMIN') %}#}
+{#        {{ form_row(form.delete) }}#}
+        <a href="{{ path('app_profil_supprimer', {'id': user.id}) }}" class="btn btn-danger" onclick="return confirmDelete();">Supprimer</a>
+        <script>
+            function confirmDelete() {
+                return confirm("Etes-vous sûr de vouloir supprimer ce compte?");
+            }
+        </script>
+{#    {% endif %}#}
 
     {{ form_end(form) }}
+
+
+
 {% endblock %}
