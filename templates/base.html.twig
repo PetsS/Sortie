@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr" xml:lang="fr" xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Sortie.com{% endblock %}</title>
         <link rel="icon" href="{{ asset('img/Eni_Logo.png') }}">
 
@@ -15,7 +15,7 @@
         {% endblock %}
     </head>
     <body>
-        <img src="{{ asset('img/Eni_Logo.png') }}" />
+        <img src="{{ asset('img/Eni_Logo.png') }}" alt="logo"/>
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="alert alert-{{ label }}"> {{ message }} </div>
