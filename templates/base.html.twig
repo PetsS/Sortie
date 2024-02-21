@@ -33,9 +33,19 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="{{ path('app_profil_creer') }}">Ajout Utilisateur</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ path('app_sortie_liste') }}">Sorties</a></li>
-{#                        <li class="nav-item"><a class="nav-link" href="{{ path('app_profil') }}">Mon Profil</a></li>#}
+                        {% if is_granted('ROLE_ADMIN') %}
+{#                            <li style="padding: 5px;"><a href="{{ path('app_validation') }}">Validations Sorties</a></li>#}
+                            <li style="padding: 5px;"><a href="{{ path('app_profil_creer') }}">Ajout Utilisateur</a></li>
+{#                            <li style="padding: 5px;"><a href="{{ path('app_campus') }}">Les Campus</a></li>#}
+
+                        {% endif %}
+                        {% if is_granted('IS_AUTHENTICATED') %}
+{#                            <li style="padding: 5px;"><a href="{{ path('app_sortie_creer') }}">Créer une sortie</a>#}
+{#                            <li style="padding: 5px;"><a href="{{ path('app_profil', {'id' : user.id }) }}">Mon Profil</a></li>#}
+                            <li style="padding: 5px;"><a href="{{ path('app_logout') }}">Deconnexion</a></li>
+                        {% else %}
+                            <li style="padding: 5px;"><a href="{{ path('app_login') }}">Connexion</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -56,25 +66,6 @@
         {% endfor %}
     {% endfor %}
 </div>
-
-{#<nav>#}
-{#    <ul style="display:flex; flex-direction: row;list-style: none;">#}
-{#        {% if is_granted('ROLE_ADMIN') %}#}
-{#            #}{#                    <li style="padding: 5px;"><a href="{{ path('app_validation') }}">Validations Sorties</a></li> #}
-{#            <li style="padding: 5px;"><a href="{{ path('app_profil_creer') }}">Ajout Utilisateur</a></li>#}
-{#            #}{#                    <li style="padding: 5px;"><a href="{{ path('app_campus') }}">Les Campus</a></li> #}
-
-{#        {% endif %}#}
-{#        {% if is_granted('IS_AUTHENTICATED') %}#}
-{#            <li style="padding: 5px;"><a href="{{ path('app_sortie_liste') }}">Sorties</a></li>#}
-{#            #}{#                    <li style="padding: 5px;"><a href="{{ path('app_sortie_creer') }}">Créer une sortie</a> #}
-{#            <li style="padding: 5px;"><a href="{{ path('app_profil') }}">Mon Profil</a></li>#}
-{#            #}{#                    <li style="padding: 5px;"><a href="{{ path('app_logout') }}">Deconnexion</a></li> #}
-{#        {% else %}#}
-{#            #}{#                    <li style="padding: 5px;"><a href="{{ path('app_login') }}">Connexion</a></li> #}
-{#        {% endif %}#}
-{#    </ul>#}
-{#</nav>#}
 
 <div class="container">
     {% block body %}
