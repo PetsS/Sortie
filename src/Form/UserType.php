@@ -35,7 +35,7 @@ class UserType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('password', RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => false,
                 'options' => [

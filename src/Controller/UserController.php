@@ -32,7 +32,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/creer', name: '_creer')]
-    #[IsGranted('ROLE_ADMIN')]
+//    #[IsGranted('ROLE_ADMIN')]
     public function creer(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
         $user = new User();

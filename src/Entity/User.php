@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $telephone = null;
 
     #[ORM\Column]
-    private ?bool $isActif = null;
+    private ?bool $isActif = true;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
