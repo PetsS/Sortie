@@ -33,7 +33,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/creer', name: '_creer')]
-//    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     public function creer(Request $request, EntityManagerInterface $em, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
@@ -111,7 +111,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/supprimer/{id}', name: '_supprimer', requirements: ['id' => '\d+'])]
-//    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     public function supprimer(int $id, UserRepository $userRepository, EntityManagerInterface $em): Response
     {
         $user = $userRepository->find($id);
