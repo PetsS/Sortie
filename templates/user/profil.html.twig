@@ -9,8 +9,7 @@
             {% if user.photo %}
                 <img src="{{asset(photo_dir ~ '/' ~ user.photo)}}" class="card-img-top" alt="image" loading="lazy"/>
             {% else %}
-                <img src="{{asset(photo_dir ~ '/question.svg')}}" class="card-img-top" alt="image" loading="lazy"/>
-
+                <img src="{{asset(photo_dir ~ '/placeholder_profil_img.png')}}" class="card-img-top" alt="image" loading="lazy"/>
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title">Profil de {{ user.pseudo }}</h5>

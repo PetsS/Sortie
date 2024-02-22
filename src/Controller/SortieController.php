@@ -16,17 +16,20 @@ class SortieController extends AbstractController
     #[Route('/liste', name: '_liste')]
     public function listeSortie(SortieRepository $sortieRepository): Response
     {
-        $userId = $this->getUser();
+        $user = $this->getUser();
         $sorties = $sortieRepository->findAll();
-        $isUserInscrit = false;
-        foreach ($sorties as $sortie ){
-            foreach ($sortie ->getParticipants() as $participant) {
-                if ($participant -> getId() === $userId){
-                    $isUserInscrit = true;
-                }
-            }
+        $isUserInscrit = [];
+
+        foreach ($sorties as $sortie){
+            $isUserInscrit[$sortie->getId()] = $sortie->getParticipants()->contains($user);
+
+//            if ($sortie->getParticipants()->contains($user)) {
+//                $isUserInscrit = true;
+//            } else {
+//                $isUserInscrit = false;
+//            }
         }
-        var_dump( $isUserInscrit);
+
         return $this->render('sortie/listeSortie.html.twig', [
             'sorties' => $sorties,
             'isUserInscrit' => $isUserInscrit
@@ -60,7 +63,6 @@ class SortieController extends AbstractController
     #[Route('/desinscription/{sortie}', name: '_desinscription', requirements: ['sortie' => '\d+'])]
     public function desinscription(Sortie $sortie, EntityManagerInterface $em): Response
     {
-
         $user = $this->getUser();
 
         if ($user instanceof \App\Entity\User){
