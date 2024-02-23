@@ -8,7 +8,6 @@ use App\Entity\Sortie;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,34 +22,22 @@ class CreerUneSortieType extends AbstractType
             ->add('dateLimiteInscription')
             ->add('nbMaxInscription')
             ->add('infosSortie')
-            ->add('etat',ChoiceType::class ,[
-                'required'=>false,
-                'choices'=> [
-                    'EN COURS'=>'EN COURS',
-                    'TERMINER'=>'TERMINER',
-                    'ANNULER'=>'ANNULER',
-                    ],
-                'row_attr' => [
-                    'class' => 'input-group mb-3'
-                ]
-            ])
+            ->add('etat')
             ->add('adresse', EntityType::class, [
-                'label' =>'ville',
                 'class' => Adresse::class,
-            'choice_label' => 'ville',
+            'choice_label' => 'id',
             ])
             ->add('site', EntityType::class, [
-                'label' =>'Campus',
                 'class' => Site::class,
-            'choice_label' => 'nom',
+            'choice_label' => 'id',
             ])
             ->add('organisateur', EntityType::class, [
                 'class' => User::class,
-            'choice_label' => 'nom',
+            'choice_label' => 'id',
             ])
             ->add('participants', EntityType::class, [
                 'class' => User::class,
-            'choice_label' => 'nom',
+            'choice_label' => 'id',
             'multiple' => true,
             ])
         ;
