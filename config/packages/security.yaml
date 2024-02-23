@@ -19,7 +19,7 @@ security:
             custom_authenticator: App\Security\AppAuthenticator
             logout:
                 path: app_logout
-                # where to redirect after logout
+                target: /sortie/liste
                 # target: app_any_route
 
             remember_me:
