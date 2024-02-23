@@ -9,11 +9,8 @@ use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CreerUneSortieType extends AbstractType
 {
@@ -50,10 +47,10 @@ class CreerUneSortieType extends AbstractType
 //                ]
 //            ])
             ->add('adresse', EntityType::class, [
-                'label' =>'ville',
                 'class' => Adresse::class,
-                'choice_label' => 'ville',
-                ])
+            'choice_label' => 'id',
+            ])
+
 //            ->add('site', EntityType::class, [
 //                'label' =>'Campus',
 //                'class' => Site::class,
