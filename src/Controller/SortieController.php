@@ -22,12 +22,6 @@ class SortieController extends AbstractController
 
         foreach ($sorties as $sortie){
             $isUserInscrit[$sortie->getId()] = $sortie->getParticipants()->contains($user);
-
-//            if ($sortie->getParticipants()->contains($user)) {
-//                $isUserInscrit = true;
-//            } else {
-//                $isUserInscrit = false;
-//            }
         }
 
         return $this->render('sortie/listeSortie.html.twig', [
@@ -49,7 +43,7 @@ class SortieController extends AbstractController
     {
         $user = $this->getUser();
 
-        if ($user instanceof \App\Entity\User){
+        if ($user instanceof User){
             $sortie-> addParticipant($user);
         }
 
@@ -65,7 +59,7 @@ class SortieController extends AbstractController
     {
         $user = $this->getUser();
 
-        if ($user instanceof \App\Entity\User){
+        if ($user instanceof User){
             $sortie-> removeParticipant($user);
         }
 
