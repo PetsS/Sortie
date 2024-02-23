@@ -10,8 +10,12 @@ use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 #[Route('/sortie', name: 'app_sortie')]
 class SortieController extends AbstractController
 {
@@ -146,7 +150,7 @@ class SortieController extends AbstractController
 
              $this->addFlash('success', 'La sortie a été enregistrée');
 
-            return $this->redirectToRoute('app_adresse_create');
+            return $this->redirectToRoute('app_sortie_liste');
 
         }
 
