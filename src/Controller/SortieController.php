@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -14,19 +15,33 @@ use Symfony\Component\Routing\Attribute\Route;
 class SortieController extends AbstractController
 {
     #[Route('/liste', name: '_liste')]
-    public function listeSortie(SortieRepository $sortieRepository): Response
+    public function listeSortie(SortieRepository $sortieRepository, Request $request): Response
     {
         $user = $this->getUser();
-        $sorties = $sortieRepository->findAll();
+
+        $form = $this->createForm(SortieType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $criteria = $form->getData();
+            // TODO custom queryBuilder dans SortieReposisory
+            $sorties = $sortieRepository->findFilteredSorties($criteria);
+        } else {
+            $sorties = $sortieRepository->findAll();
+        }
+
         $isUserInscrit = [];
+        $isOrganisateur = [];
 
         foreach ($sorties as $sortie){
             $isUserInscrit[$sortie->getId()] = $sortie->getParticipants()->contains($user);
+            $isOrganisateur[$sortie->getId()] = $sortie->getOrganisateur() === $user;
         }
 
         return $this->render('sortie/listeSortie.html.twig', [
             'sorties' => $sorties,
-            'isUserInscrit' => $isUserInscrit
+            'isUserInscrit' => $isUserInscrit,
+            'isOrganisateur' => $isOrganisateur
         ]);
     }
 

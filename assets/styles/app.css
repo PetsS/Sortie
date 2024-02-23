@@ -1,5 +1,5 @@
 body {
-    background-color: darkseagreen;
+    background-color: #57709b;
 }
 
 .card{
@@ -20,4 +20,8 @@ body {
     z-index: 1;
     box-shadow: 1px 1px 10px rgba(0,0,0,.3);
     cursor: pointer;
+}
+.card-link {
+    text-decoration: none;
+    color: inherit;
 }
