@@ -34,19 +34,19 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav d-flex gap-2 ms-auto mb-2 mb-lg-0">
                         {% if is_granted('ROLE_ADMIN') %}
 {#                            <li style="padding: 5px;"><a href="{{ path('app_validation') }}">Validations Sorties</a></li>#}
-                            <li class="nav-item"><a class="nav-link" href="{{ path('app_profil_creer') }}">Ajout Utilisateur</a></li>
+                            <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil_creer') }}">Ajout Utilisateur</a></li>
 {#                            <li style="padding: 5px;"><a href="{{ path('app_campus') }}">Les Campus</a></li>#}
 
                         {% endif %}
                         {% if is_granted('IS_AUTHENTICATED') %}
 {#                            <li style="padding: 5px;"><a href="{{ path('app_sortie_creer') }}">Créer une sortie</a>#}
-                            <li class="nav-item"><a class="nav-link" href="{{ path('app_profil', {'id' : app.user.id }) }}">Mon Profil</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a></li>
+                            <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil', {'id' : app.user.id }) }}">Mon Profil</a></li>
+                            <li class="btn btn-sm btn-outline-danger"><a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a></li>
                         {% else %}
-                            <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
+                            <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
                         {% endif %}
                     </ul>
                 </div>

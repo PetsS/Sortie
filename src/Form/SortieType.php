@@ -35,6 +35,10 @@ class SortieType extends AbstractType
             ])
             ->add('dateDebut', DateType::class, [
                 'required' => false,
+                'label' => 'Date début :',
+                'attr' => [
+                    'class' => 'form-control mr-sm-2',
+                ]
             ])
 //            ->add('duree')
 //            ->add('dateLimiteInscription')
@@ -83,7 +87,8 @@ class SortieType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary mr-2'
                 ]
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
