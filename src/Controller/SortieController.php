@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\User;
+use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,16 +24,31 @@ class SortieController extends AbstractController
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(SortieType::class);
+        $form = $this->createForm(SortieType::class, null, ['method' => 'GET']);
+
         $form->handleRequest($request);
 
+        $dateDebut = new \DateTime();
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $criteria = $form->getData();
+
             // TODO custom queryBuilder dans SortieReposisory
-            $sorties = $sortieRepository->findFilteredSorties($criteria);
+
+            $site = $form->get('site')->getData();
+            $nom = $form->get('nom')->getData();
+            $dateDebut = $form->get('dateDebut')->getData();
+
+            $sorties = $sortieRepository->findFilteredSorties([
+                'site' => $site,
+                'nom' => $nom,
+                'dateDebut' => $dateDebut,
+
+            ]);
+
         } else {
             $sorties = $sortieRepository->findAll();
         }
+
 
         $isUserInscrit = [];
         $isOrganisateur = [];
@@ -41,7 +61,8 @@ class SortieController extends AbstractController
         return $this->render('sortie/listeSortie.html.twig', [
             'sorties' => $sorties,
             'isUserInscrit' => $isUserInscrit,
-            'isOrganisateur' => $isOrganisateur
+            'isOrganisateur' => $isOrganisateur,
+            'form' => $form
         ]);
     }
 

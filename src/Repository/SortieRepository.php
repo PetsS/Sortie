@@ -21,33 +21,33 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    // TODO function pour les filtres
-    public function findFilteredSorties() {
+    public function findFilteredSorties(array $criteria) {
         // TODO toutes les filtrage et queries, etc
+
+        $qb = $this->createQueryBuilder('s');
+
+        if (!empty($criteria['nom'])) {
+            $qb->andWhere('s.nom LIKE :sortieNom')
+                ->setParameter('sortieNom', '%' . $criteria['nom'] . '%');
+        }
+
+        if (!empty($criteria['dateDebut'])) {
+            $qb->andWhere('s.dateDebut >= :date')
+                ->setParameter('date', $criteria['dateDebut']);
+        }
+
+        if (!empty($criteria['endDate'])) {
+            $qb->andWhere('s.endDate <= :endDate')
+                ->setParameter('endDate', $criteria['endDate']);
+        }
+
+        if (!empty($criteria['site'])) {
+            $qb->andWhere('s.site = :id')
+                ->setParameter('id', $criteria['site']);
+        }
+
+        return $qb->getQuery()->getResult();
+
     }
 
-//    /**
-//     * @return Sortie[] Returns an array of Sortie objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Sortie
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

@@ -6,9 +6,10 @@
     <h1> Liste des sorties</h1>
     <div class="container-fluid">
 
-        <section>
-{#            TODO notre formulare pour les filtres #}
-        </section>
+        <form>
+            {{ form_start(form) }}
+            {{ form_end(form) }}
+        </form>
 
         <div class="d-flex flex-wrap justify-content-evenly">
             {% for sortie in sorties %}
