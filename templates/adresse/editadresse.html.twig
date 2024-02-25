@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+    <h2>Creation Adresse</h2>
+    <button type="submit">Envoyer</button>
+    {{ form_start(form) }}
+
+    {{ form_label(form) }}
+    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+
+
+    {{ form_end(form) }}
+{% endblock %}
