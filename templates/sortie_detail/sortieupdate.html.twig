@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+    <h2>Modifier la Sortie</h2>
+    {{ form_start(form) }}
+    <button type="submit">Page suivante</button>
+    <button type="submit">Publier la sortie</button>
+    <a href="{{ path('app_sortie_liste') }}" class="btn btn-primary">Annuler</a>
+    {{ form_label(form) }}
+    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_end(form) }}
+{% endblock %}

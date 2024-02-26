@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+
+    <h1> supprimer{{ adresse.nom }}</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.nom) }}
+    {{ form_row(form.rue) }}
+    {{ form_row(form.numero) }}
+    {{ form_row(form.codePostal) }}
+
+
+
+    {{ form_widget(form.return) }} {{ form_widget(form.submit) }}
+
+    <a href="{{ path('app_profil_supprimer', {'id': adresse.id}) }}" class="btn btn-danger" onclick="return confirmDelete();">Supprimer</a>
+    <script>
+        function confirmDelete() {
+            return confirm("Etes-vous sûr?");
+        }
+    </script>
+    {#    {% endif %}#}
+
+    {{ form_end(form) }}
+
+
+
+{% endblock %}
