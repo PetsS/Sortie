@@ -19,14 +19,13 @@ class SortieController extends AbstractController
     public function listeSortie(SortieRepository $sortieRepository, Request $request): Response
     {
         $user = $this->getUser();
+        $sortie = new Sortie();
 
         $form = $this->createForm(SortieType::class, null, ['method' => 'GET']);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // TODO custom queryBuilder dans SortieReposisory
 
             $site = $form->get('site')->getData();
             $nom = $form->get('nom')->getData();
@@ -51,7 +50,14 @@ class SortieController extends AbstractController
             ]);
 
         } else {
-            $sorties = $sortieRepository->findAll();
+            $dateNow = new \DateTime();
+            if ($sortie->getDateDebut() < $dateNow) {
+                $sorties = $sortieRepository->findSortiesCourant([
+                    'dateNow' => $dateNow,
+                ]);
+            } else {
+                $sorties = $sortieRepository->findAll();
+            }
         }
 
 

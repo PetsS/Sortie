@@ -73,4 +73,17 @@ class SortieRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
 
     }
+
+    public function findSortiesCourant(array $criteria) {
+
+        $qb = $this->createQueryBuilder('s');
+
+        if (!empty($criteria['dateNow'])) {
+            $qb->andWhere('s.dateDebut > :date')
+                ->setParameter('date', $criteria['dateNow']);
+        }
+
+        return $qb->getQuery()->getResult();
+
+    }
 }
