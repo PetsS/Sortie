@@ -20,15 +20,14 @@
 
 
     {{ form_widget(form.return) }} {{ form_widget(form.submit) }}
-{#    {% if is_granted('ROLE_ADMIN') %}#}
-{#        {{ form_row(form.delete) }}#}
+    {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('app_profil_supprimer', {'id': user.id}) }}" class="btn btn-danger" onclick="return confirmDelete();">Supprimer</a>
         <script>
             function confirmDelete() {
                 return confirm("Etes-vous sûr de vouloir supprimer ce compte?");
             }
         </script>
-{#    {% endif %}#}
+    {% endif %}
 
     {{ form_end(form) }}
 

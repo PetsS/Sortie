@@ -7,7 +7,10 @@
     <div class="container d-flex justify-content-center">
         <div class="card" style="width: 30rem;">
             {% if user.photo %}
-                <img src="{{ asset(photo_dir ~ '/' ~ user.photo) }}" class="card-img-top" alt="image" loading="lazy"/>
+                <img src="{{asset(photo_dir ~ '/' ~ user.photo)}}" class="card-img-top" alt="image" loading="lazy"/>
+            {% else %}
+                <img src="{{asset(photo_dir ~ '/question.svg')}}" class="card-img-top" alt="image" loading="lazy"/>
+
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title">Profil de {{ user.pseudo }}</h5>
