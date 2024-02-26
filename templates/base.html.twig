@@ -41,7 +41,9 @@
                         {% endif %}
                         {% if is_granted('IS_AUTHENTICATED') %}
 {#                            <li style="padding: 5px;"><a href="{{ path('app_sortie_creer') }}">Créer une sortie</a>#}
+
                             <li style="padding: 5px;"><a href="{{ path('app_profil', {'id' : app.user.id }) }}">Mon Profil</a></li>
+                            <li style="padding: 5px;"><a href="{{ path('app_sortie_create') }}">creer une sortie</a></li>
                             <li style="padding: 5px;"><a href="{{ path('app_logout') }}">Deconnexion</a></li>
                         {% else %}
                             <li style="padding: 5px;"><a href="{{ path('app_login') }}">Connexion</a></li>

@@ -24,7 +24,7 @@ class AdresseController extends AbstractController
             'controller_name' => 'AdresseController',
         ]);
     }
-    #[Route('/detail/{id}', name: '_detail',requirements: ['id' =>'\d+'])]
+   /* #[Route('/detail/{id}', name: '_detail',requirements: ['id' =>'\d+'])]
     public function DetailAdresse(int $id, AdresseRepository $adresseRepository ): Response
     {
         $adresse= $adresseRepository->find($id);
@@ -33,7 +33,7 @@ class AdresseController extends AbstractController
             'adresse' => $adresse
 
         ]);
-    }
+    }*/
 
     #[Route('/create', name: '_create')]
     public function create(Request $request, EntityManagerInterface $em): Response
@@ -88,6 +88,12 @@ class AdresseController extends AbstractController
             'adresse' => $adresse
         ]);
     }
+
+
+
+
 }
+
+
 
 
