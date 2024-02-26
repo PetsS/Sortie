@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\CreerUneSortieType;
+use App\Form\UserType;
 use App\Repository\SortieRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -48,7 +51,7 @@ class SortieController extends AbstractController
 
              $this->addFlash('success', 'La sortie a été enregistrée');
 
-            return $this->redirectToRoute('app_sortie_liste');
+            return $this->redirectToRoute('app_adresse_create');
 
         }
 
@@ -59,6 +62,35 @@ class SortieController extends AbstractController
         ]);
 
     }
+
+    #[Route('/update/{id}', name: '_update', requirements: ['id' => '\d+'])]
+    public function update(int $id, SortieRepository $sortieRepository, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    {
+        $sortie = $sortieRepository->find($id);
+
+        $form = $this->createForm(CreerUneSortieType::class, $sortie);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $em->persist($sortie);
+            $em->flush();
+
+            $this->addFlash('success', 'La sortie a été modifié');
+            return $this->redirectToRoute('app_adresse_update', ['id' => $id]);
+        }
+
+        return $this->render('sortie_detail/sortieupdate.html.twig', [
+            'form' => $form,
+            'sortie' => $sortie
+        ]);
+    }
+
+
+
+
 
 
 
