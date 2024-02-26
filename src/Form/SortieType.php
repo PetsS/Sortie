@@ -50,6 +50,7 @@ class SortieType extends AbstractType
             ->add('checkOrganisateur', CheckboxType::class, [
                 'required' => false,
                 'label' => 'Sortie.s où je suis organisateur',
+                'mapped' => false,
                 'attr' => [
                     'class' => 'form-check mr-sm-2',
                 ]

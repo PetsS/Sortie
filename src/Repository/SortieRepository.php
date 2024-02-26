@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Security\Core\User\UserInterface;
 use function PHPUnit\Framework\isFalse;
 
@@ -23,7 +24,7 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    public function findFilteredSorties(UserInterface $user, array $criteria) {
+    public function findFilteredSorties( UserInterface $user, array $criteria) {
         // TODO toutes les filtrage et queries, etc
 
         $qb = $this->createQueryBuilder('s');
@@ -48,14 +49,12 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('id', $criteria['site']);
         }
 
-        if (($criteria['checkOrganisateur'])) {
+        if (!empty($criteria['checkOrganisateur'])) {
             $qb->andWhere('s.organisateur = :user')
                 ->setParameter('user', $user);
         }
 
-
         return $qb->getQuery()->getResult();
 
     }
-
 }
