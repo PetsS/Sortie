@@ -32,12 +32,15 @@ class SortieController extends AbstractController
             $nom = $form->get('nom')->getData();
             $dateDebut = $form->get('dateDebut')->getData();
             $dateFin = $form->get('dateFin')->getData();
+            $checkOrga = $form->get('checkOrganisateur')->getData();
 
-            $sorties = $sortieRepository->findFilteredSorties([
+            $sorties = $sortieRepository->findFilteredSorties($user,[
                 'site' => $site,
                 'nom' => $nom,
                 'dateDebut' => $dateDebut,
-                'dateFin' => $dateFin
+                'dateFin' => $dateFin,
+                'checkOrganisateur' => $checkOrga
+
 
             ]);
 

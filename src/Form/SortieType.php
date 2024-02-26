@@ -47,6 +47,14 @@ class SortieType extends AbstractType
                     'class' => 'form-control mr-sm-2',
                 ]
             ])
+            ->add('checkOrganisateur', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Sortie.s où je suis organisateur',
+                'attr' => [
+                    'class' => 'form-check mr-sm-2',
+                ]
+            ])
+
 //            ->add('duree')
 //            ->add('dateLimiteInscription')
 //            ->add('nbMaxInscription')
