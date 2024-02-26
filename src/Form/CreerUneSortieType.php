@@ -24,20 +24,22 @@ class CreerUneSortieType extends AbstractType
             ->add('infosSortie')
             ->add('etat')
             ->add('adresse', EntityType::class, [
+                'label' =>'ville',
                 'class' => Adresse::class,
-            'choice_label' => 'id',
+            'choice_label' => 'ville',
             ])
             ->add('site', EntityType::class, [
+                'label' =>'Campus',
                 'class' => Site::class,
-            'choice_label' => 'id',
+            'choice_label' => 'nom',
             ])
             ->add('organisateur', EntityType::class, [
                 'class' => User::class,
-            'choice_label' => 'id',
+            'choice_label' => 'nom',
             ])
             ->add('participants', EntityType::class, [
                 'class' => User::class,
-            'choice_label' => 'id',
+            'choice_label' => 'nom',
             'multiple' => true,
             ])
         ;
