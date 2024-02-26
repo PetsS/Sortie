@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Adresse;
 use App\Form\AdresseType;
+use App\Form\CreerUneSortieType;
 use App\Repository\AdresseRepository;
+use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/adresse', name: 'app_adresse')]
 class AdresseController extends AbstractController
@@ -59,6 +62,31 @@ class AdresseController extends AbstractController
         ]);
 
 
+    }
+
+    #[Route('/update/{id}', name: '_update', requirements: ['id' => '\d+'])]
+    public function update(int $id, AdresseRepository $adresseRepository, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    {
+        $adresse = $adresseRepository->find($id);
+
+        $form = $this->createForm(AdresseType::class, $adresse);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $em->persist($adresse);
+            $em->flush();
+
+            $this->addFlash('success', 'L\'adresse a été modifié');
+            return $this->redirectToRoute('app_sortie_liste', ['id' => $id]);
+        }
+
+        return $this->render('sortie_detail/sortieupdate.html.twig', [
+            'form' => $form,
+            'adresse' => $adresse
+        ]);
     }
 }
 

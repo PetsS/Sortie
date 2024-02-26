@@ -4,7 +4,9 @@
 {% block body %}
 
     {{ form_start(form) }}
-    <button type="submit">Envoyer</button>
+    <button type="submit">Page suivante</button>
+    <button type="submit">Publier la sortie</button>
+    <button ><a href="{{ path('app_sortie_liste') }}"/> Annuler </button>
     {{ form_label(form) }}
     {{ form_widget(form) }}
     {{ form_errors(form) }}
