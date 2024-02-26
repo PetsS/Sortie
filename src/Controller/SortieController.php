@@ -20,51 +20,50 @@ class SortieController extends AbstractController
     {
         $user = $this->getUser();
         $sortie = new Sortie();
+        $dateNow = new \DateTime();
 
         $form = $this->createForm(SortieType::class, null, ['method' => 'GET']);
-
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($sortie->getDateDebut() < $dateNow) {
 
-            $site = $form->get('site')->getData();
-            $nom = $form->get('nom')->getData();
-            $dateDebut = $form->get('dateDebut')->getData();
-            $dateFin = $form->get('dateFin')->getData();
-            $checkOrga = $form->get('checkOrganisateur')->getData();
-            $checkParticipant = $form->get('checkParticipant')->getData();
-            $checkNonParticipant = $form->get('checkNonParticipant')->getData();
-            $datePasse = $form->get('datePasse')->getData();
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $site = $form->get('site')->getData();
+                $nom = $form->get('nom')->getData();
+                $dateDebut = $form->get('dateDebut')->getData();
+                $dateFin = $form->get('dateFin')->getData();
+                $checkOrga = $form->get('checkOrganisateur')->getData();
+                $checkParticipant = $form->get('checkParticipant')->getData();
+                $checkNonParticipant = $form->get('checkNonParticipant')->getData();
+                $datePasse = $form->get('datePasse')->getData();
 
 
-            $sorties = $sortieRepository->findFilteredSorties($user, [
-                'site' => $site,
-                'nom' => $nom,
-                'dateDebut' => $dateDebut,
-                'dateFin' => $dateFin,
-                'checkOrganisateur' => $checkOrga,
-                'checkParticipant' => $checkParticipant,
-                'checkNonParticipant' => $checkNonParticipant,
-                'datePasse' => $datePasse
+                $sorties = $sortieRepository->findFilteredSorties($user, [
+                    'site' => $site,
+                    'nom' => $nom,
+                    'dateDebut' => $dateDebut,
+                    'dateFin' => $dateFin,
+                    'checkOrganisateur' => $checkOrga,
+                    'checkParticipant' => $checkParticipant,
+                    'checkNonParticipant' => $checkNonParticipant,
+                    'datePasse' => $datePasse
 
-            ]);
+                ]);
 
-        } else {
-            $dateNow = new \DateTime();
-            if ($sortie->getDateDebut() < $dateNow) {
+            } else {
                 $sorties = $sortieRepository->findSortiesCourant([
                     'dateNow' => $dateNow,
                 ]);
-            } else {
-                $sorties = $sortieRepository->findAll();
+
+//                $sorties = $sortieRepository->findAll();
             }
         }
-
 
         $isUserInscrit = [];
         $isOrganisateur = [];
 
-        foreach ($sorties as $sortie){
+        foreach ($sorties as $sortie) {
             $isUserInscrit[$sortie->getId()] = $sortie->getParticipants()->contains($user);
             $isOrganisateur[$sortie->getId()] = $sortie->getOrganisateur() === $user;
         }
@@ -84,7 +83,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/detail/{id}', name: '_detail', requirements: ['id' => '\d+'])]
-    public function detail( int $id): Response
+    public function detail(int $id): Response
     {
         return $this->render('sortie/infoSortie.html.twig', [
             'id' => $id
@@ -96,8 +95,8 @@ class SortieController extends AbstractController
     {
         $user = $this->getUser();
 
-        if ($user instanceof User){
-            $sortie-> addParticipant($user);
+        if ($user instanceof User) {
+            $sortie->addParticipant($user);
         }
 
         $em->persist($user);
@@ -112,8 +111,8 @@ class SortieController extends AbstractController
     {
         $user = $this->getUser();
 
-        if ($user instanceof User){
-            $sortie-> removeParticipant($user);
+        if ($user instanceof User) {
+            $sortie->removeParticipant($user);
         }
 
         $em->persist($user);
