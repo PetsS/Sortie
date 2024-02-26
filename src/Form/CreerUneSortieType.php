@@ -24,16 +24,16 @@ class CreerUneSortieType extends AbstractType
             ->add('nbMaxInscription')
             ->add('infosSortie')
             ->add('etat',ChoiceType::class ,[
-                    'required'=>false,
-                    'choices'=>[
-                        'EN COURS'=>'EN COURS',
-                        'TERMINER'=>'TERMINER',
-                        'ANNULER'=>'ANNULER',
-            ],
-            'row_attr' => [
-        'class' => 'input-group mb-3'
+                'required'=>false,
+                'choices'=> [
+                    'EN COURS'=>'EN COURS',
+                    'TERMINER'=>'TERMINER',
+                    'ANNULER'=>'ANNULER',
+                    ],
+                'row_attr' => [
+                    'class' => 'input-group mb-3'
                 ]
-    ])
+            ])
             ->add('adresse', EntityType::class, [
                 'label' =>'ville',
                 'class' => Adresse::class,
