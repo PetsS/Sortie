@@ -10,7 +10,16 @@
      <p> Nombre de places: {{ sortie.nbMaxInscription }}</p>
      <p> Durée: {{ sortie.duree }}</p>
      <p>Description et infos: {{ sortie.infosSortie }}</p>
+     <p>Nom lieu: {{ sortie.adresse.nomLieu }}</p>
+     <p> Rue: {{ sortie.adresse.rue}} </p>
+     <p> Code Postal: {{sortie.adresse.codePostal}}</p>
+     <p> Ville: {{ sortie.adresse.ville}}</p>
+     <p> Numero de Rue: {{ sortie.adresse.numeroRue }}</p>
+     <p>Latitude: {{ sortie.adresse.latitude }}</p>
+     <p>Longitude: {{ sortie.adresse.longitude }}</p>
 
+
+ <a type="button" class="btn btn-danger" href="{{ path('app_sortie_delete',{'id':sortie.id}) }}" onclick="return confirm('Etes-vous sûr ?')">supprimer</a><i class="bi bi-trash"></i>
 
 
 
