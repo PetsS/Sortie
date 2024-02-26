@@ -54,6 +54,22 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('user', $user);
         }
 
+        if (!empty($criteria['checkParticipant'])) {
+            $qb->andWhere(':user MEMBER OF s.participants')
+                ->setParameter('user', $user);
+        }
+
+        if (!empty($criteria['checkNonParticipant'])) {
+            $qb->andWhere(':user NOT MEMBER OF s.participants')
+                ->setParameter('user', $user);
+
+        }
+
+        if (!empty($criteria['datePasse'])) {
+            $dateNow = new \DateTime();
+            $qb->andWhere('s.dateDebut < :dateNow')
+            ->setParameter('dateNow', $dateNow);
+        }
         return $qb->getQuery()->getResult();
 
     }

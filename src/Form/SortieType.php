@@ -56,6 +56,32 @@ class SortieType extends AbstractType
                 ]
             ])
 
+            ->add('checkParticipant', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Sortie.s où je participe',
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'form-check mr-sm-2',
+                ]
+            ])
+            ->add('checkNonParticipant', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Sortie.s où je ne participe pas',
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'form-check mr-sm-2',
+                ]
+            ])
+
+            ->add('datePasse', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Sortie.s terminée.s',
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'form-check mr-sm-2',
+                ]
+            ])
+
 //            ->add('duree')
 //            ->add('dateLimiteInscription')
 //            ->add('nbMaxInscription')
