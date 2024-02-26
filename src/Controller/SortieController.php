@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/sortie', name: 'app_sortie')]
@@ -88,6 +89,21 @@ class SortieController extends AbstractController
         ]);
     }
 
+    #[Route('/delete/{id}', name: '_delete', requirements: ['id' => '\d+'])]
+    //#[IsGranted('ROLE_ADMIN')]
+    public function supprimer(Sortie $sortie, EntityManagerInterface $em): Response
+    {
+
+
+            $em->remove($sortie);
+            $em->flush();
+
+            $this->addFlash('success', 'la sortie a été supprimer!');
+
+            return $this->redirectToRoute('app_sortie_liste');
+
+
+    }
 
 
 
