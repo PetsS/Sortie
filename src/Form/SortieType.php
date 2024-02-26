@@ -35,7 +35,14 @@ class SortieType extends AbstractType
             ])
             ->add('dateDebut', DateType::class, [
                 'required' => false,
-                'label' => 'Date début :',
+                'label' => 'Entre :',
+                'attr' => [
+                    'class' => 'form-control mr-sm-2',
+                ]
+            ])
+            ->add('dateFin', DateType::class, [
+                'required' => false,
+                'label' => 'et :',
                 'attr' => [
                     'class' => 'form-control mr-sm-2',
                 ]

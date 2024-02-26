@@ -36,9 +36,9 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('date', $criteria['dateDebut']);
         }
 
-        if (!empty($criteria['endDate'])) {
-            $qb->andWhere('s.endDate <= :endDate')
-                ->setParameter('endDate', $criteria['endDate']);
+        if (!empty($criteria['dateFin'])) {
+            $qb->andWhere('s.dateDebut <= :dateFin')
+                ->setParameter('dateFin', $criteria['dateFin']);
         }
 
         if (!empty($criteria['site'])) {
