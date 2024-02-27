@@ -51,7 +51,7 @@ class AdresseController extends AbstractController
 
             $this->addFlash('success', 'La adresse a été enregistrée');
 
-            return $this->redirectToRoute('app_adresse_liste');
+            return $this->redirectToRoute('app_sortie_liste');
 
         }
 
