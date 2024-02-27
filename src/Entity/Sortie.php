@@ -85,7 +85,6 @@ class Sortie
         return $this->dateDebut;
     }
 
-    #[ORM\PrePersist]
     public function setDateDebut(?\DateTimeInterface $dateDebut): static
     {
         $this->dateDebut = $dateDebut;
