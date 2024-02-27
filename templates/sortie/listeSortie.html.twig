@@ -3,43 +3,53 @@
 {% block title %}Hello SortieController!{% endblock %}
 
 {% block body %}
-    <h1> Liste des sorties</h1>
+    <div class="border border-5 rounded-bottom shadow-sm p-3 text-center bg-body-tertiary"
+         style="
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');
 
-    <form class="">
-        {{ form_start(form) }}
-        <div class="row justify-content-evenly">
-            <div class="col">
-                {{ form_row(form.nom) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.site) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.dateDebut) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.dateFin) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.checkOrganisateur) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.checkParticipant) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.checkNonParticipant) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.datePasse) }}
-            </div>
+            "
+    >
+        <h1 class="display-6 text-center"> Liste des sorties</h1>
+    </div>
 
+    {% if is_granted('ROLE_USER') %}
+        <form class="">
+            {{ form_start(form) }}
+            <div class="row justify-content-evenly">
+                <div class="col">
+                    {{ form_row(form.nom) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.site) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.dateDebut) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.dateFin) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.checkOrganisateur) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.checkParticipant) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.checkNonParticipant) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(form.datePasse) }}
+                </div>
+            </div>
+            <div class="d-grid gap-2 d-md-block pt-2">
+                {{ form_widget(form.submit) }} <a href="{{ path('app_sortie_reset') }}" class="btn btn-dark">Réinitialiser</a>
+            </div>
+            {{ form_end(form) }}
+        </form>
+    {% endif %}
 
-        </div>
-        <div class="d-grid gap-2 d-md-block pt-2">
-            {{ form_widget(form.submit) }} <a href="{{ path('app_sortie_reset') }}" class="btn btn-dark">Réinitialiser</a>
-        </div>
-        {{ form_end(form) }}
-    </form>
 
     <div class="container-fluid">
 
