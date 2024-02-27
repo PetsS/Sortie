@@ -14,7 +14,9 @@ class EtatListener
             $sortie->setEtat('TERMINER');
 
         }
+    }
 
-
+    public function prePersist(Sortie $sortie) {
+        $sortie->setEtat('EN COURS');
     }
 }
