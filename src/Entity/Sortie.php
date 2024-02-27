@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Listener\EtatListener;
+use App\Entity\EntityListen\EtatListener;
+
 use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -58,6 +59,9 @@ class Sortie
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateFin = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo = null;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -85,7 +89,7 @@ class Sortie
         return $this->dateDebut;
     }
 
-    #[ORM\PrePersist]
+  //      #[ORM\PrePersist]
     public function setDateDebut(?\DateTimeInterface $dateDebut): static
     {
         $this->dateDebut = $dateDebut;
@@ -221,6 +225,18 @@ class Sortie
     public function setDateFin(?\DateTimeInterface $dateFin): static
     {
         $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): static
+    {
+        $this->photo = $photo;
 
         return $this;
     }

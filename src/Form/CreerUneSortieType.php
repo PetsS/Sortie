@@ -9,8 +9,10 @@ use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class CreerUneSortieType extends AbstractType
 {
@@ -23,17 +25,6 @@ class CreerUneSortieType extends AbstractType
             ->add('dateLimiteInscription')
             ->add('nbMaxInscription')
             ->add('infosSortie')
-            ->add('etat',ChoiceType::class ,[
-                    'required'=>false,
-                    'choices'=>[
-                        'EN COURS'=>'EN COURS',
-                        'TERMINER'=>'TERMINER',
-                        'ANNULER'=>'ANNULER',
-            ],
-            'row_attr' => [
-        'class' => 'input-group mb-3'
-                ]
-    ])
             ->add('adresse', EntityType::class, [
                 'label' =>'ville',
                 'class' => Adresse::class,
@@ -53,6 +44,22 @@ class CreerUneSortieType extends AbstractType
             'choice_label' => 'nom',
             'multiple' => true,
             ])
+            ->add('photo', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/jpg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => "Ce format n'est pas bon",
+                        'maxSizeMessage' => "Ce fichier est trop lourd"
+                    ])
+                ]
+            ]);
         ;
     }
 
