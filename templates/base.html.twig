@@ -29,9 +29,9 @@
                      class="d-inline-block align-text-center">
                 Sortie.com
             </a>
-            {% if is_granted('IS_AUTHENTICATED') %}
-                <span>Bienvenue {{ app.user.nom }} {{ app.user.prenom }} [{% for role in app.user.roles %} {{ role }} {% endfor %}]</span>
-            {% endif %}
+{#            {% if is_granted('IS_AUTHENTICATED') %}#}
+{#                <span>Bienvenue {{ app.user.nom }} {{ app.user.prenom }} [{% for role in app.user.roles %} {{ role }} {% endfor %}]</span>#}
+{#            {% endif %}#}
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,11 +73,13 @@
     {% endfor %}
 </div>
 
-<div class="container-fluid pt-3">
+<div class="container-fluid pt-3 pb-5">
     {% block body %}
 
     {% endblock %}
 </div>
+
+</body>
 
 <footer class="bg-light text-center fixed-bottom">
     <div class="text-center p-2">
@@ -87,5 +89,5 @@
         </div>
     </div>
 </footer>
-</body>
+
 </html>

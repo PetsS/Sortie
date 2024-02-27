@@ -167,11 +167,10 @@ class SortieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
             $em->persist($sortie);
             $em->flush();
 
-            $this->addFlash('success', 'La sortie a été modifié');
+            $this->addFlash('success', 'La sortie a été modifié.');
             return $this->redirectToRoute('app_adresse_update', ['id' => $id]);
         }
 

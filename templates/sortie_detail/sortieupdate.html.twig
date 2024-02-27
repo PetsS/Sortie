@@ -4,14 +4,13 @@
 {% block body %}
     <h1>Modifier la Sortie</h1>
     {{ form_start(form) }}
-    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-        <button type="submit"class="btn btn-primary">Page suivante</button>
-        <button type="submit" class="btn btn-warning">Publier la sortie</button>
-        <a href="{{ path('app_sortie_liste') }}" class="btn btn-danger">Annuler</a>
-    </div>
-    {{ form_label(form) }}
+
+{#    {{ form_label(form) }}#}
     {{ form_widget(form) }}
     {{ form_errors(form) }}
-
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <button type="submit" class="btn btn-primary">Page suivante (Adresse)</button>
+        <a href="{{ path('app_sortie_liste') }}" class="btn btn-danger">Annuler</a>
+    </div>
     {{ form_end(form) }}
 {% endblock %}

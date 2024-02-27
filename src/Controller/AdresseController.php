@@ -83,7 +83,7 @@ class AdresseController extends AbstractController
             return $this->redirectToRoute('app_sortie_liste', ['id' => $id]);
         }
 
-        return $this->render('sortie_detail/sortieupdate.html.twig', [
+        return $this->render('adresse/adresseupdate.html.twig', [
             'form' => $form,
             'adresse' => $adresse
         ]);
