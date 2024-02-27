@@ -24,16 +24,16 @@ class AdresseController extends AbstractController
             'controller_name' => 'AdresseController',
         ]);
     }
-   // #[Route('/detail/{id}', name: '_detail',requirements: ['id' =>'\d+'])]
-    //public function DetailAdresse(int $id, AdresseRepository $adresseRepository ): Response
-    //{
-      //  $adresse= $adresseRepository->find($id);
+   /* #[Route('/detail/{id}', name: '_detail',requirements: ['id' =>'\d+'])]
+    public function DetailAdresse(int $id, AdresseRepository $adresseRepository ): Response
+    {
+        $adresse= $adresseRepository->find($id);
 
-       // return $this->render('adresse/index.html.twig', [
-         //   'adresse' => $adresse
+        return $this->render('adresse/index.html.twig', [
+            'adresse' => $adresse
 
-       // ]);
-    //}
+        ]);
+    }*/
 
     #[Route('/create', name: '_create')]
     public function create(Request $request, EntityManagerInterface $em): Response
