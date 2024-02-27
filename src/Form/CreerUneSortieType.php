@@ -22,7 +22,6 @@ class CreerUneSortieType extends AbstractType
             ->add('dateLimiteInscription')
             ->add('nbMaxInscription')
             ->add('infosSortie')
-            ->add('etat')
             ->add('adresse', EntityType::class, [
                 'label' =>'ville',
                 'class' => Adresse::class,

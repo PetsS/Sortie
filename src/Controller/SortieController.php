@@ -137,6 +137,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $sortie->setEtat('EN ATTENTE');
             $em->persist($sortie);
             $em->flush();
 
