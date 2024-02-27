@@ -1,5 +1,8 @@
 body {
-    background-color: #57709b;
+    /*background-color: #57709b;*/
+    /*background: linear-gradient(to bottom, #829abe, rgb(88, 112, 152));*/
+    background-image: radial-gradient(#96a5c2, rgb(88, 112, 152));
+"
 }
 
 .card{
