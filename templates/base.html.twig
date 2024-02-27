@@ -40,24 +40,17 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav d-flex gap-2 ms-auto mb-2 mb-lg-0">
                     {% if is_granted('ROLE_ADMIN') %}
-                        {#                            <li style="padding: 5px;"><a href="{{ path('app_validation') }}">Validations Sorties</a></li> #}
-                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link"
-                                                                        href="{{ path('app_profil_liste') }}">Gestion
-                                d'Utilisateur</a></li>
-                        {#                            <li style="padding: 5px;"><a href="{{ path('app_campus') }}">Les Campus</a></li> #}
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="#">Validation</a></li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil_liste') }}">Gestion d'Utilisateur</a></li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="#">Les Campus</a></li>
 
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED') %}
-                        {#                            <li style="padding: 5px;"><a href="{{ path('app_sortie_creer') }}">Créer une sortie</a> #}
-                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link"
-                                                                        href="{{ path('app_profil', {'id' : app.user.id }) }}">Mon
-                                Profil</a></li>
-                        <li class="btn btn-sm btn-outline-danger"><a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
-                        </li>
-                        <li style="padding: 5px;"><a href="{{ path('app_sortie_create') }}">Créer une sortie</a></li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_sortie_create') }}">Créer une sortie</a>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil', {'id' : app.user.id }) }}">Mon Profil</a></li>
+                        <li class="btn btn-sm btn-outline-danger"><a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a></li>
                     {% else %}
-                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
-                        </li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
                     {% endif %}
                 </ul>
             </div>
