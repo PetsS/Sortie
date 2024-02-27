@@ -35,7 +35,7 @@ class Sortie
     #[ORM\Column(length: 255)]
     private ?string $infosSortie = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $etat = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]

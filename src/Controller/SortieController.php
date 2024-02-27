@@ -25,7 +25,7 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, null, ['method' => 'GET']);
         $form->handleRequest($request);
 
-        if ($sortie->getDateDebut() < $dateNow) {
+        if (($sortie->getDateDebut() < $dateNow)) {
 
             if ($form->isSubmitted() && $form->isValid()) {
 
@@ -55,8 +55,6 @@ class SortieController extends AbstractController
                 $sorties = $sortieRepository->findSortiesCourant([
                     'dateNow' => $dateNow,
                 ]);
-
-//                $sorties = $sortieRepository->findAll();
             }
         }
 
