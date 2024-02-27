@@ -18,6 +18,19 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/profil', name: 'app_profil')]
 class UserController extends AbstractController
 {
+    #[Route('/liste', name: '_liste', requirements: ['id' => '\d+'])]
+    public function listeProfil(UserRepository $userRepository): Response
+    {
+        $users = $userRepository->findAll();
+
+//        dd($user);
+
+        return $this->render('user/listeProfil.html.twig', [
+            'users' => $users
+        ]);
+    }
+
+
     #[Route('/{id}', name: '', requirements: ['id' => '\d+'])]
     public function profil(int $id, UserRepository $userRepository): Response
     {
