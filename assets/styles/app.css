@@ -1,7 +1,10 @@
 body {
     /*background-color: #57709b;*/
-    /*background: linear-gradient(to bottom, #829abe, rgb(88, 112, 152));*/
-    background-image: radial-gradient(#96a5c2, rgb(88, 112, 152));
+    background: linear-gradient(to bottom, #97aed0, rgb(88, 112, 152));
+    /*background-image: radial-gradient(#96a5c2, rgb(88, 112, 152));*/
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 "
 }
 
