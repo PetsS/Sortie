@@ -85,7 +85,7 @@ class SortieType extends AbstractType
 
             ->add('datePasse', CheckboxType::class, [
                 'required' => false,
-                'label' => 'Sortie.s terminée.s',
+                'label' => 'Sortie.s terminée.s et en cours',
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-check mr-sm-2',

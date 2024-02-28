@@ -6,29 +6,26 @@ use App\Entity\Sortie;
 class EtatListener
 {
 
-    public function postLoad(): void
+    public function postLoad(Sortie $sortie): void
     {
-        $sortie = getSortie();
+
+
         $dateNow = new \DateTime();
         $dureeMinutes = $sortie->getDuree();
         $dureeSecondes = $dureeMinutes*60;
         $dureeTimeStamp = time()+$dureeSecondes;
-
         $conversionDuree = \DateTime::createFromFormat('U', $dureeTimeStamp);
-
         $debut = $sortie->getDateDebut();
-
-        dd($debut);
         $conversionDuree->setTimestamp($debut->getTimestamp());
+        $conversionDuree->add(new \DateInterval('PT' . $dureeMinutes . 'M'));
 
         if ($sortie->getDateLimiteInscription() >= $dateNow) {
             $sortie->setEtat('OUVERT');
-        }elseif(($sortie->getDateLimiteInscription() < $dateNow) && ($dateNow < $sortie->getDateDebut())){
+        }elseif(($dateNow < $debut) & ($dateNow > $sortie->getDateLimiteInscription())){
             $sortie->setEtat('FERME');
-//        } elseif (($sortie->getDateDebut() <= $dateNow) && ($dateNow < $conversionDuree)){
-        } elseif ($dateNow > $sortie->getDateDebut()){
+        } elseif (($dateNow < $conversionDuree) & ($dateNow > $debut)){
             $sortie->setEtat('EN COURS');
-        } elseif ($conversionDuree <= $dateNow){
+        } elseif (($conversionDuree < $dateNow) & ($dateNow > $sortie->getDateLimiteInscription())){
             $sortie->setEtat('TERMINE');
         }
     }
