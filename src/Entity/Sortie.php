@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\EntityListen\EtatListener;
+use App\Entity\Listener\EtatListener;
 
 use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;

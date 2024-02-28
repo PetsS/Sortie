@@ -54,19 +54,7 @@
                             <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
                         {% endif %}
                     </ul>
-                </div>
-                    {% endif %}
-                    {% if is_granted('IS_AUTHENTICATED') %}
-                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_sortie_create') }}">Créer une sortie</a>
-                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil', {'id' : app.user.id }) }}">Mon Profil</a></li>
-                        <li class="btn btn-sm btn-outline-danger"><a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a></li>
-                    {% else %}
-                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-
-        </div>
+                        </div>
     </nav>
 </header>
 
