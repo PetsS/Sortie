@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+
+    <table class="table table-hover pt-3 border border-5 justify-content-center" id="userTable">
+        <thead>
+        <tr>
+            <th scope="col">Actif</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Pseudo</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+
+
+        <tbody class="table-group-divider">
+        {% for user in users %}
+            <tr style="cursor: pointer" data-href="{{ path('app_profil', {'id': user.id }) }}">
+                <td>
+                    {% if user.isActif %}
+                        <i class="bi bi-check-circle text-success"></i>
+                    {% else %}
+                        <i class="bi bi-x-circle text-danger"></i>
+                    {% endif %}
+                </td>
+
+                <td> {{ user.nom }} </td>
+                <td> {{ user.prenom }} </td>
+                <td> {{ user.pseudo }} </td>
+
+                <td>
+                    <a class="btn btn-secondary" type="button" href="{{ path('app_profil_update', {'id': user.id }) }}">Modifier</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" type="button" href="{{ path('app_sortie_liste') }}">Retour</a>
+    <a class="btn btn-primary" type="button" href="{{ path('app_profil_creer') }}">Créer Profil</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const table = document.getElementById("userTable");
+            const rows = table.getElementsByTagName("tr");
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                row.addEventListener("click", function () {
+                    const href = this.getAttribute("data-href");
+                    if (href) {
+                        window.location.href = href;
+                    }
+                });
+            }
+        });
+    </script>
+
+{% endblock %}

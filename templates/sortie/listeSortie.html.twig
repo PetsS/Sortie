@@ -5,96 +5,108 @@
 {% block body %}
     <div class="border border-5 rounded-bottom shadow-sm p-3 text-center bg-body-tertiary"
          style="
+            color: #dbeafe;
             margin-top: 1rem;
             margin-bottom: 1rem;
             background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');
-
+            /*background-repeat: no-repeat;*/
+            /*background-attachment: fixed;*/
+            background-size: cover;
             "
     >
         <h1 class="display-6 text-center"> Liste des sorties</h1>
     </div>
 
-    {% if is_granted('ROLE_USER') %}
-        <form class="">
-            {{ form_start(form) }}
-            <div class="row justify-content-evenly">
-                <div class="col">
-                    {{ form_row(form.nom) }}
+    <div class="border border-0 rounded p-3"
+         style="
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                background-color: rgba(255,255,255,0.16);
+                "
+    >
+        {% if is_granted('ROLE_USER') %}
+            <form class="">
+                {{ form_start(form) }}
+                <div class="row justify-content-evenly">
+                    <div class="col">
+                        {{ form_row(form.nom) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_row(form.site) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_row(form.dateDebut) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_row(form.dateFin) }}
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center">
+                        {{ form_widget(form.checkOrganisateur) }}
+                        {{ form_label(form.checkOrganisateur) }}
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center">
+                        {{ form_widget(form.checkParticipant) }}
+                        {{ form_label(form.checkParticipant) }}
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center">
+                        {{ form_widget(form.checkNonParticipant) }}
+                        {{ form_label(form.checkNonParticipant) }}
+                    </div>
+                    <div class="col-md-3 d-flex align-items-center">
+                        {{ form_widget(form.datePasse) }}
+                        {{ form_label(form.datePasse) }}
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    {{ form_row(form.site) }}
+                <div class="d-grid gap-2 d-md-block pt-2">
+                    {{ form_widget(form.submit) }} <a href="{{ path('app_sortie_reset') }}" class="btn btn-dark">Réinitialiser</a>
                 </div>
-                <div class="col-md-3">
-                    {{ form_row(form.dateDebut) }}
-                </div>
-                <div class="col-md-3">
-                    {{ form_row(form.dateFin) }}
-                </div>
-                <div class="col-md-3">
-                    {{ form_row(form.checkOrganisateur) }}
-                </div>
-                <div class="col-md-3">
-                    {{ form_row(form.checkParticipant) }}
-                </div>
-                <div class="col-md-3">
-                    {{ form_row(form.checkNonParticipant) }}
-                </div>
-                <div class="col-md-3">
-                    {{ form_row(form.datePasse) }}
-                </div>
-            </div>
-            <div class="d-grid gap-2 d-md-block pt-2">
-                {{ form_widget(form.submit) }} <a href="{{ path('app_sortie_reset') }}" class="btn btn-dark">Réinitialiser</a>
-            </div>
-            {{ form_end(form) }}
-        </form>
-    {% endif %}
+                {{ form_end(form) }}
+            </form>
+        {% endif %}
+    </div>
 
+    <div class="d-flex flex-wrap justify-content-evenly">
+        {% for sortie in sorties %}
+            <a class="card-link" href="{{ path('app_sortie_detail', {'id': sortie.id}) }}">
+                <div class="m-2 card" style="width: 20rem;">
+                    {#                        {% if sortie.photo %} #}
+                    {#                            <img src="{{ asset(photo_dir ~ '/' ~ sortie.photo) }}" class="card-img-top" alt="image" loading="lazy"/> #}
+                    {#                        {% else %} #}
+                    <img src="{{ asset(photo_dir ~ '/placeholder_img.png') }}" class="card-img-top" alt="image"
+                         loading="lazy"/>
+                    {#                        {% endif %} #}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ sortie.nom }}</h5>
+                        <p class="card-text">Date de la sortie: {{ sortie.dateDebut|date('d/m/Y') }}</p>
+                        <p class="card-text">Date de clôture: {{ sortie.dateLimiteInscription|date('d/m/Y') }}</p>
+                        <p class="card-text">Inscrits: {{ sortie.participants|length }}
+                            / {{ sortie.nbMaxInscription }}</p>
+                        <p class="card-text">Etat: {{ sortie.etat }}</p>
+                        <p class="card-text">Inscrit: {{ isUserInscrit[sortie.id] ? 'Oui' : 'Non' }}</p>
+                        <p class="card-text">
+                            Organisateur: {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</p>
+                        <div>
 
-    <div class="container-fluid">
-
-        <div class="d-flex flex-wrap justify-content-evenly">
-            {% for sortie in sorties %}
-                <a class="card-link" href="{{ path('app_sortie_detail', {'id': sortie.id}) }}">
-                    <div class="m-2 card" style="width: 20rem;">
-                                         {% if sortie.photo %}
-                                               <img src="{{asset(photo_dir ~ '/' ~ sortie.photo)}}" class="card-img-top" alt="image" loading="lazy"/>
-                                           {% else %}
-                        <img src="{{ asset(photo_dir ~ '/placeholder_img.png') }}" class="card-img-top" alt="image"
-                             loading="lazy"/>
-                                          {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ sortie.nom }}</h5>
-                            <p class="card-text">Date de la sortie: {{ sortie.dateDebut|date('d/m/Y') }}</p>
-                            <p class="card-text">Date de clôture: {{ sortie.dateLimiteInscription|date('d/m/Y') }}</p>
-                            <p class="card-text">Inscrits: {{ sortie.participants|length }}
-                                / {{ sortie.nbMaxInscription }}</p>
-                            <p class="card-text">Etat: {{ sortie.etat }}</p>
-                            <p class="card-text">Inscrit: {{ isUserInscrit[sortie.id] ? 'Oui' : 'Non' }}</p>
-                            <p class="card-text">
-                                Organisateur: {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</p>
-                            <div>
-
-                                {% if is_granted('ROLE_USER') %}
-                                    {% if isUserInscrit[sortie.id] %}
-                                        <a class="btn btn-danger" type="button"
-                                           href="{{ path('app_sortie_desinscription', {'sortie': sortie.id}) }}">Se
-                                            désinscrire</a>
-                                    {% else %}
-                                        <a class="btn btn-secondary" type="button"
-                                           href="{{ path('app_sortie_inscription', {'sortie': sortie.id}) }}">S'inscrire</a>
-                                    {% endif %}
-                                    {% if isOrganisateur[sortie.id] or is_granted('ROLE_ADMIN') %}
-                                         <a class="btn btn-primary" type="button" href="{{ path('app_sortie_update', {'id': sortie.id }) }}">Modifier</a>
-                                        {# <a class="btn btn-primary" type="button" href="#">Modifier</a> #}
-                                    {% endif %}
+                            {% if is_granted('ROLE_USER') %}
+                                {% if isUserInscrit[sortie.id] %}
+                                    <a class="btn btn-danger" type="button"
+                                       href="{{ path('app_sortie_desinscription', {'sortie': sortie.id}) }}">Se
+                                        désinscrire</a>
+                                {% else %}
+                                    <a class="btn btn-secondary" type="button"
+                                       href="{{ path('app_sortie_inscription', {'sortie': sortie.id}) }}">S'inscrire</a>
                                 {% endif %}
+                                {% if isOrganisateur[sortie.id] or is_granted('ROLE_ADMIN') %}
+                                    <a class="btn btn-primary" type="button"
+                                       href="{{ path('app_sortie_update', {'id': sortie.id }) }}">Modifier</a>
+                                {% endif %}
+                            {% endif %}
 
-                            </div>
                         </div>
                     </div>
-                </a>
-            {% endfor %}
-        </div>
+                </div>
+            </a>
+        {% endfor %}
     </div>
+
 {% endblock %}

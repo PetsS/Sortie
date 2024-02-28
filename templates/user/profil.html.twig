@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="container d-flex pt-3 justify-content-center">
+    <div class="container d-flex justify-content-center">
         <div class="card mb-3 custom-card" style="width: 30rem; ">
             <div class="row g-0">
                 <div class="col-md-4">
@@ -23,6 +23,12 @@
                             <p class="card-text fst-italic">(Profil désactivé) <i class="bi bi-x-circle text-danger"></i></p>
                         {% endif %}
                     </div>
+                    <div class="container-fluid d-flex justify-content-center">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <p class="card-text fst-italic">[ {{ user.roles[0] }} ]</p>
+                        {% endif %}
+                    </div>
+
                 </div>
                 <div class="col-md-8">
                     <div class="card-header"><h5 class="card-title">Profil de {{ user.pseudo }}</h5></div>
@@ -35,7 +41,7 @@
                         <p class="card-text fst-italic">Campus : {{ user.site.nom }}</p>
 
                         <div>
-                            <a class="btn btn-secondary" type="button" href="{{ path('app_sortie_liste') }}">Retour</a>
+                            <a class="btn btn-secondary" type="button" onclick="history.back()">Retour</a>
                             <a class="btn btn-primary" type="button"
                                href="{{ path('app_profil_update', {'id': user.id }) }}">Modifier</a>
                         </div>

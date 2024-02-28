@@ -28,11 +28,11 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom', SearchType::class, [
-                'label' => 'Le nom de la sortie contient :',
+                'label' => 'Rechercher:',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control mr-sm-2',
-                    'placeholder' => 'Rechercher...'
+                    'placeholder' => 'Le nom de la sortie contient...'
                 ]
             ])
             ->add('dateDebut', DateType::class, [
@@ -54,8 +54,12 @@ class SortieType extends AbstractType
                 'label' => 'Sortie.s où je suis organisateur',
                 'mapped' => false,
                 'attr' => [
-                    'class' => 'form-check mr-sm-2',
+                    'class' => 'form-check mr-sm-2 ',
+                ],
+                'label_attr' => [
+                    'style' => 'margin-left: 10px;',
                 ]
+
             ])
 
             ->add('checkParticipant', CheckboxType::class, [
@@ -64,6 +68,9 @@ class SortieType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-check mr-sm-2',
+                ],
+                'label_attr' => [
+                    'style' => 'margin-left: 10px;',
                 ]
             ])
             ->add('checkNonParticipant', CheckboxType::class, [
@@ -72,15 +79,21 @@ class SortieType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-check mr-sm-2',
+                ],
+                'label_attr' => [
+                    'style' => 'margin-left: 10px;',
                 ]
             ])
 
             ->add('datePasse', CheckboxType::class, [
                 'required' => false,
-                'label' => 'Sortie.s terminée.s',
+                'label' => 'Sortie.s terminée.s et en cours',
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-check mr-sm-2',
+                ],
+                'label_attr' => [
+                    'style' => 'margin-left: 10px;',
                 ]
             ])
 

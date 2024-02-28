@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controller;
+
 use App\Entity\Sortie;
 use App\Entity\User;
 use App\Form\CreerUneSortieType;
@@ -8,7 +10,6 @@ use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -106,6 +107,8 @@ class SortieController extends AbstractController
     {
         $sortie = new Sortie();
         $user =$this->getUser();
+        $user = $this->getUser();
+
         $form = $this->createForm(CreerUneSortieType::class, $sortie);
         $form->handleRequest($request);
 
@@ -145,7 +148,7 @@ class SortieController extends AbstractController
         ]);
     }
     #[Route('/update/{id}', name: '_update', requirements: ['id' => '\d+'])]
-    public function update(int $id, SortieRepository $sortieRepository, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    public function update(int $id, SortieRepository $sortieRepository, Request $request, EntityManagerInterface $em): Response
     {
         $sortie = $sortieRepository->find($id);
         $form = $this->createForm(CreerUneSortieType::class, $sortie);
@@ -166,6 +169,8 @@ class SortieController extends AbstractController
             $em->persist($sortie);
             $em->flush();
             $this->addFlash('success', 'La sortie a été modifié');
+
+            $this->addFlash('success', 'La sortie a été modifié.');
             return $this->redirectToRoute('app_adresse_update', ['id' => $id]);
         }
 
@@ -179,15 +184,36 @@ class SortieController extends AbstractController
     public function supprimer(Sortie $sortie, EntityManagerInterface $em): Response
     {
 
-        $em->remove($sortie);
-        $em->flush();
-        $this->addFlash('success', 'la sortie a été supprimer!');
-        return $this->redirectToRoute('app_sortie_liste');
+            $em->remove($sortie);
+            $em->flush();
 
+            $this->addFlash('success', 'la sortie a été supprimer!');
+
+            return $this->redirectToRoute('app_sortie_liste');
     }
 
+    #[Route('/validationListe', name: '_validationListe')]
+    public function validationListeSortie(SortieRepository $sortieRepository): Response
+    {
+        $sorties = $sortieRepository ->findBy(['etat' => 'EN ATTENTE']);
+        return $this->render('sortie/validationSortie.html.twig', [
+            'sorties' => $sorties,
+        ]);
+    }
+
+    #[Route('/validation/{id}', name: '_validation', requirements: ['id' => '\d+'])]
+    public function validationSortie(int $id, SortieRepository $sortieRepository, EntityManagerInterface $em): Response
+    {
+        $sortie = $sortieRepository->find($id);
+        $sortie -> setEtat('OUVERT');
 
 
+
+
+        $em->persist($sortie);
+        $em->flush();
+        return $this->redirectToRoute('app_sortie_validationListe');
+    }
 
 
 }
