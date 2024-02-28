@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+
+    <table class="table table-hover pt-3 border border-5 justify-content-center" id="userTable">
+        <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Campus</th>
+            <th scope="col">Organisateur</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+
+        <tbody class="table-group-divider">
+        {% for sortie in sorties %}
+            <tr style="cursor: pointer" data-href="{{ path('app_sortie_detail', {'id': sortie.id }) }}">
+
+                <td> {{ sortie.nom }} </td>
+                <td> {{ sortie.etat }} </td>
+                <td> {{ sortie.site.nom }} </td>
+                <td> {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </td>
+
+                <td>
+                   {% if sortie.etat != 'FERME'%}  <a class="btn btn-secondary" type="submit" href="{{ path('app_sortie_validation', {'id': sortie.id }) }}">Valider</a> {% endif %}
+                    <a class="btn btn-danger" type="button" href="{{ path('app_sortie_delete', {'id': sortie.id }) }}">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" type="button" href="{{ path('app_sortie_liste') }}">Retour</a>
+    <a class="btn btn-primary" type="button" href="{{ path('app_sortie_create') }}">Créer Sortie</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const table = document.getElementById("userTable");
+            const rows = table.getElementsByTagName("tr");
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                row.addEventListener("click", function () {
+                    const href = this.getAttribute("data-href");
+                    if (href) {
+                        window.location.href = href;
+                    }
+                });
+            }
+        });
+    </script>
+
+{% endblock %}

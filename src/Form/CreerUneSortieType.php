@@ -45,11 +45,11 @@ class CreerUneSortieType extends AbstractType
 //                    'class' => 'input-group mb-3'
 //                ]
 //            ])
-//            ->add('adresse', EntityType::class, [
-//                'label' =>'ville',
-//                'class' => Adresse::class,
-//                'choice_label' => 'ville',
-//                ])
+            ->add('adresse', EntityType::class, [
+                'label' =>'ville',
+                'class' => Adresse::class,
+                'choice_label' => 'ville',
+                ])
 //            ->add('site', EntityType::class, [
 //                'label' =>'Campus',
 //                'class' => Site::class,
