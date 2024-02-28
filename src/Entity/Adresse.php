@@ -7,7 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: AdresseRepository::class)]
+
+
 class Adresse
 {
     #[ORM\Id]
@@ -16,18 +19,24 @@ class Adresse
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    //#[Assert\NotBlank(message: 'peut pas etre nul')]
     private ?string $nomLieu = null;
 
     #[ORM\Column(length: 255)]
+    //#[Assert\NotBlank(message: 'peut pas etre nul')]
     private ?string $rue = null;
 
     #[ORM\Column(length: 255)]
+    //#[Assert\NotBlank(message: 'peut pas etre nul')]
     private ?string $codePostal = null;
 
     #[ORM\Column(length: 255)]
+    //#[Assert\NotBlank(message: 'peut pas etre nul')]
     private ?string $ville = null;
 
     #[ORM\Column(length: 255)]
+    //#[Assert\NotBlank(message: 'peut pas etre nul')]
+    //#[Assert\Regex(pattern: '/^\d+$/', message: "Seuls les chiffres sont autorisés")]
     private ?string $numeroRue = null;
 
     #[ORM\Column(nullable: true)]

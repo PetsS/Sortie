@@ -108,6 +108,12 @@ class SortieController extends AbstractController
         $user =$this->getUser();
         $form = $this->createForm(CreerUneSortieType::class, $sortie);
         $form->handleRequest($request);
+
+        if ($user instanceof User){
+            $sortie->setSite($user->getSite());
+            $sortie->setOrganisateur($user);
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             if (!empty($form->get('photo')) && $form->get('photo')->getData() instanceof UploadedFile) {
                 $dir = $this->getParameter('photo_dir');
@@ -132,7 +138,7 @@ class SortieController extends AbstractController
             $em->persist($sortie);
             $em->flush();
             $this->addFlash('success', 'La sortie a été enregistrée');
-            return $this->redirectToRoute('app_adresse_create');
+            return $this->redirectToRoute('app_sortie_liste');
         }
         return $this->render('sortie_detail/edit.html.twig', [
             'form' => $form

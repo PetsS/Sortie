@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 #[ORM\EntityListeners([EtatListener::class])]
@@ -21,21 +22,28 @@ class Sortie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: 'Veuillez reseigner un nom de sortie')]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\GreaterThan(propertyPath: 'dateLimiteInscription',message: 'la date ne peut pas être inférieur')]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column]
+    #[Assert\Type(type: Types::INTEGER, message:'Veuillez saisir la duree en minutes')]
+    #[Assert\NotBlank(message: 'peut pas etre nul')]
     private ?int $duree = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull(message: 'la date ne peut pas être supérieur')]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
+    #[Assert\Type(type: Types::INTEGER, message:'Veuillez saisir le nombre d\'inscription possible')]
     private ?int $nbMaxInscription = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull()]
     private ?string $infosSortie = null;
 
     #[ORM\Column(length: 255, nullable: true)]

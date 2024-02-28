@@ -70,15 +70,6 @@ class CreerUneSortieType extends AbstractType
                 'class' => Site::class,
             'choice_label' => 'nom',
             ])
-            ->add('organisateur', EntityType::class, [
-                'class' => User::class,
-              'choice_label' => 'nom',
-            ])
-            ->add('participants', EntityType::class, [
-                'class' => User::class,
-            'choice_label' => 'nom',
-            'multiple' => true,
-            ])
             ->add('photo', FileType::class, [
                 'required' => false,
                 'mapped' => false,
