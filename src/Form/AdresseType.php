@@ -16,12 +16,13 @@ class AdresseType extends AbstractType
     {
         $builder
             ->add('nomLieu')
+            ->add('numeroRue')
             ->add('rue')
             ->add('codePostal')
             ->add('ville')
-            ->add('numeroRue')
-            ->add('latitude')
-            ->add('longitude')
+
+           // ->add('latitude')
+            //->add('longitude')
         ;
     }
 

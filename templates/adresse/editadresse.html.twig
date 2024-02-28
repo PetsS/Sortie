@@ -2,15 +2,15 @@
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
 {% block body %}
-    <h1>Creation Adresse</h1>
+    <h1>Creation sortie (Adresse)</h1>
 
     {{ form_start(form) }}
-
-    {{ form_label(form) }}
+    {#  {{ form_label(form) }}#}
     {{ form_widget(form) }}
     {{ form_errors(form) }}
     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-     <button type="submit"class="btn btn-primary">Envoyer</button>
+    <a href="{{ path('app_sortie_create') }}" type="submit"class="btn btn-primary">Page suivante</a>
+    <a href="{{ path('app_sortie_liste') }}" class="btn btn-danger">Annuler</a>
     </div>
     {{ form_end(form) }}
 {% endblock %}

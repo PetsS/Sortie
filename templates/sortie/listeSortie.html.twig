@@ -85,8 +85,8 @@
                                            href="{{ path('app_sortie_inscription', {'sortie': sortie.id}) }}">S'inscrire</a>
                                     {% endif %}
                                     {% if isOrganisateur[sortie.id] or is_granted('ROLE_ADMIN') %}
-                                        {# <a class="btn btn-primary" type="button" href="{{ path('app_sortie_update', {'id': sortie.id }) }}">Modifier</a> #}
-                                        <a class="btn btn-primary" type="button" href="#">Modifier</a>
+                                         <a class="btn btn-primary" type="button" href="{{ path('app_sortie_update', {'id': sortie.id }) }}">Modifier</a>
+                                        {# <a class="btn btn-primary" type="button" href="#">Modifier</a> #}
                                     {% endif %}
                                 {% endif %}
 

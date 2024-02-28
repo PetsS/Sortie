@@ -105,6 +105,7 @@ class SortieController extends AbstractController
     public function create(Request $request, EntityManagerInterface $em,sluggerInterface $slugger): Response
     {
         $sortie = new Sortie();
+        $user =$this->getUser();
         $form = $this->createForm(CreerUneSortieType::class, $sortie);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -122,6 +123,12 @@ class SortieController extends AbstractController
 
             }
             //$sortie->setEtat('EN ATTENTE');
+            if ($user instanceof User){
+                $sortie->setSite($user->getSite());
+                $sortie->setOrganisateur($user);
+            }
+
+
             $em->persist($sortie);
             $em->flush();
             $this->addFlash('success', 'La sortie a été enregistrée');
@@ -149,6 +156,7 @@ class SortieController extends AbstractController
                 }
                 $sortie->setPhoto($fileName);
             }
+
             $em->persist($sortie);
             $em->flush();
             $this->addFlash('success', 'La sortie a été modifié');
