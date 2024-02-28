@@ -132,13 +132,19 @@ class SortieController extends AbstractController
 
     {
         $sortie = new Sortie();
+        $user = $this->getUser();
 
         $form = $this->createForm(CreerUneSortieType::class, $sortie);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sortie->setEtat('EN ATTENTE');
+
+            if ($user instanceof User) {
+                $sortie->setSite($user->getSite());
+                $sortie->setOrganisateur($user);
+            }
+
             $em->persist($sortie);
             $em->flush();
 
@@ -195,14 +201,6 @@ class SortieController extends AbstractController
 
 
     }
-
-
-
-
-
-
-
-
 
 
 }
