@@ -20,8 +20,8 @@ class AdresseType extends AbstractType
             ->add('codePostal')
             ->add('ville')
             ->add('numeroRue')
-            ->add('latitude')
-            ->add('longitude')
+//            ->add('latitude')
+//            ->add('longitude')
         ;
     }
 
