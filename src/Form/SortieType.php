@@ -2,23 +2,17 @@
 
 namespace App\Form;
 
-use App\Entity\Adresse;
 use App\Entity\Site;
 use App\Entity\Sortie;
-use App\Entity\User;
-use App\Repository\SortieRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SortieType extends AbstractType
 {
@@ -29,10 +23,20 @@ class SortieType extends AbstractType
                 'label' => 'Rechercher:',
                 'required' => false,
                 'attr' => [
+
                     'class' => 'form-control mr-sm-2',
                     'placeholder' => 'Le nom de la sortie contient...'
-                ]
+                ],
+
+//                'constraints' =>[
+//                    new NotBlank([
+//                        'message' => 'Le nom de la sortie ne peut pas être vide.',
+//                        'groups' => ['creation']
+//                    ])
+//                ]
             ])
+
+
             ->add('dateDebut', DateType::class, [
                 'required' => false,
                 'label' => 'Entre :',

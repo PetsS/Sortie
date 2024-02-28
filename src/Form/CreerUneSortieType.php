@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CreerUneSortieType extends AbstractType
 {
@@ -22,6 +23,9 @@ class CreerUneSortieType extends AbstractType
             ->add('nom', TextType::class, [
                 'label' =>'Nom',
                 'required' =>false,
+                'constraints' => [
+                    new NotBlank(message: 'Le champ ne peux pas être vide')
+                ]
             ])
             ->add('dateDebut')
             ->add('duree')
