@@ -30,17 +30,21 @@
                 <div class="col-md-3">
                     {{ form_row(form.dateFin) }}
                 </div>
-                <div class="col-md-3">
-                    {{ form_row(form.checkOrganisateur) }}
+                <div class="col-md-3 d-flex align-items-center">
+                    {{ form_widget(form.checkOrganisateur) }}
+                    {{ form_label(form.checkOrganisateur) }}
                 </div>
-                <div class="col-md-3">
-                    {{ form_row(form.checkParticipant) }}
+                <div class="col-md-3 d-flex align-items-center">
+                    {{ form_widget(form.checkParticipant) }}
+                    {{ form_label(form.checkParticipant) }}
                 </div>
-                <div class="col-md-3">
-                    {{ form_row(form.checkNonParticipant) }}
+                <div class="col-md-3 d-flex align-items-center">
+                    {{ form_widget(form.checkNonParticipant) }}
+                    {{ form_label(form.checkNonParticipant) }}
                 </div>
-                <div class="col-md-3">
-                    {{ form_row(form.datePasse) }}
+                <div class="col-md-3 d-flex align-items-center">
+                    {{ form_widget(form.datePasse) }}
+                    {{ form_label(form.datePasse) }}
                 </div>
             </div>
             <div class="d-grid gap-2 d-md-block pt-2">

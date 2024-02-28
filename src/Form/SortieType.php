@@ -26,11 +26,11 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom', SearchType::class, [
-                'label' => 'Le nom de la sortie contient :',
+                'label' => 'Rechercher:',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control mr-sm-2',
-                    'placeholder' => 'Rechercher...'
+                    'placeholder' => 'Le nom de la sortie contient...'
                 ]
             ])
             ->add('dateDebut', DateType::class, [
@@ -52,8 +52,12 @@ class SortieType extends AbstractType
                 'label' => 'Sortie.s où je suis organisateur',
                 'mapped' => false,
                 'attr' => [
-                    'class' => 'form-check mr-sm-2',
+                    'class' => 'form-check mr-sm-2 ',
+                ],
+                'label_attr' => [
+                    'style' => 'margin-left: 10px;',
                 ]
+
             ])
 
             ->add('checkParticipant', CheckboxType::class, [
@@ -62,6 +66,9 @@ class SortieType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-check mr-sm-2',
+                ],
+                'label_attr' => [
+                    'style' => 'margin-left: 10px;',
                 ]
             ])
             ->add('checkNonParticipant', CheckboxType::class, [
@@ -70,6 +77,9 @@ class SortieType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-check mr-sm-2',
+                ],
+                'label_attr' => [
+                    'style' => 'margin-left: 10px;',
                 ]
             ])
 
@@ -79,6 +89,9 @@ class SortieType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-check mr-sm-2',
+                ],
+                'label_attr' => [
+                    'style' => 'margin-left: 10px;',
                 ]
             ])
 
