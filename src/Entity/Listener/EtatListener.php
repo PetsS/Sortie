@@ -21,6 +21,9 @@ class EtatListener
 
         if ($sortie->getDateLimiteInscription() >= $dateNow) {
             $sortie->setEtat('OUVERT');
+            if(count($sortie->getParticipants()) >= $sortie->getNbMaxInscription()) {
+                $sortie->setEtat('COMPLET');
+            }
         }elseif(($dateNow < $debut) & ($dateNow > $sortie->getDateLimiteInscription())){
             $sortie->setEtat('FERME');
         } elseif (($dateNow < $conversionDuree) & ($dateNow > $debut)){

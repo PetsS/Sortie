@@ -26,7 +26,7 @@ class CreerUneSortieType extends AbstractType
     {
         $builder
             ->add('nom',TextType::class, [
-                'label' => 'Votre Nom',
+                'label' => 'Nom de la sortie',
                 'required' => false,
                 'attr' => [
                     'maxlength' => 255,
@@ -50,23 +50,9 @@ class CreerUneSortieType extends AbstractType
 
 
             ])
-            ->add('nom', TextType::class, [
-                'label' =>'Nom',
-                'required' =>false,
-            ])
-            ->add('dateDebut')
-            ->add('duree')
-            ->add('dateLimiteInscription')
-            ->add('nbMaxInscription')
-            ->add('infosSortie', TextareaType::class,[
-                'label' => 'Description de la sortie',
-                'required' => false,
-                'attr' => [
-                'maxlength' => 255,
-                'class' => 'special-class',
-                 ],
 
-                ])
+            ->add('nbMaxInscription')
+
             ->add('infosSortie', TextareaType::class, [
                 'label' =>'Description de la sortie',
                 'required' =>false,

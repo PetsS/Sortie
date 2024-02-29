@@ -6,6 +6,7 @@ use App\Repository\AdresseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: AdresseRepository::class)]
@@ -18,25 +19,26 @@ class Adresse
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    //#[Assert\NotBlank(message: 'peut pas etre nul')]
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Veuillez saisir une nom de sortie')]
     private ?string $nomLieu = null;
 
     #[ORM\Column(length: 255)]
-    //#[Assert\NotBlank(message: 'peut pas etre nul')]
+    #[Assert\NotBlank(message: 'Veuillez saisir une nom de rue')]
     private ?string $rue = null;
 
     #[ORM\Column(length: 255)]
-    //#[Assert\NotBlank(message: 'peut pas etre nul')]
+    #[Assert\NotBlank(message: 'Veuillez saisir une code postal valide')]
+    #[Assert\Regex(pattern: '/^\d+$/', message: "Seuls les chiffres sont autorisés")]
     private ?string $codePostal = null;
 
     #[ORM\Column(length: 255)]
-    //#[Assert\NotBlank(message: 'peut pas etre nul')]
+    #[Assert\NotBlank(message: 'Veuillez saisir un nom de ville')]
     private ?string $ville = null;
 
     #[ORM\Column(length: 255)]
-    //#[Assert\NotBlank(message: 'peut pas etre nul')]
-    //#[Assert\Regex(pattern: '/^\d+$/', message: "Seuls les chiffres sont autorisés")]
+    #[Assert\NotBlank(message: 'Veuillez saisir des chiffres')]
+    #[Assert\Regex(pattern: '/^\d+$/', message: "Seuls les chiffres sont autorisés")]
     private ?string $numeroRue = null;
 
     #[ORM\Column(nullable: true)]

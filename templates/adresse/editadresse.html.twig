@@ -9,7 +9,8 @@
     {{ form_widget(form) }}
     {{ form_errors(form) }}
     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-    <a href="{{ path('app_sortie_create') }}" type="submit"class="btn btn-primary">Page suivante</a>
+    {#  <a href="{{ path('app_adresse_create') }}" type="submit"class="btn btn-primary">Page suivante</a>#}
+        <button type="submit" class="btn btn-primary"> Page suivante</button>
         <a class="btn btn-secondary" onclick="history.back()">Retour</a>
         <a class="btn btn-danger" href="{{ path('app_sortie_liste') }}" >Annuler</a>
     </div>

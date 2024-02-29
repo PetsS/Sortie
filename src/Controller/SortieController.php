@@ -9,6 +9,7 @@ use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -106,7 +107,6 @@ class SortieController extends AbstractController
     public function create(Request $request, EntityManagerInterface $em,sluggerInterface $slugger): Response
     {
         $sortie = new Sortie();
-        $user =$this->getUser();
         $user = $this->getUser();
 
         $form = $this->createForm(CreerUneSortieType::class, $sortie);
@@ -137,7 +137,6 @@ class SortieController extends AbstractController
                 $sortie->setOrganisateur($user);
             }
 
-
             $em->persist($sortie);
             $em->flush();
             $this->addFlash('success', 'La sortie a été enregistrée');
@@ -148,7 +147,7 @@ class SortieController extends AbstractController
         ]);
     }
     #[Route('/update/{id}', name: '_update', requirements: ['id' => '\d+'])]
-    public function update(int $id, SortieRepository $sortieRepository, Request $request, EntityManagerInterface $em): Response
+    public function update(int $id, SortieRepository $sortieRepository, Request $request, EntityManagerInterface $em, sluggerInterface $slugger): Response
     {
         $sortie = $sortieRepository->find($id);
         $form = $this->createForm(CreerUneSortieType::class, $sortie);
