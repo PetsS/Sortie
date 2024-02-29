@@ -4,10 +4,33 @@
 
 {% block body %}
 
-    <h1>Detail  Sortie</h1>
-    <br>
-    <br>
+    <header>
+        <div class="border border-5 rounded-bottom shadow-sm p-3 text-center bg-body-tertiary"
+             style="
+            color: #dbeafe;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/045.webp');
+            /*background-repeat: no-repeat;*/
+            /*background-attachment: fixed;*/
+            background-size: cover;
+            /*max-width: 30rem;*/
+            "
+        >
+            <h1 class="display-6 text-center"> Detail Sortie</h1>
+        </div>
+    </header>
 
+    <h1 class="display-6 text-center">Créer une sortie</h1>
+
+    <div class="d-flex justify-content-center">
+    <div class="border border-0 rounded p-3"
+         style="
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                background-color: rgba(255,255,255,0.16);
+                "
+    >
     <div class="row g-0">
     <div class="col-md-4">
     {% if sortie.photo %}
@@ -45,7 +68,8 @@
 
     <a type="button" class="btn btn-primary" href="{{ path('app_sortie_update', {'id' : sortie.id }) }}">Modifier</a>
     <a type="button" class="btn btn-danger" href="{{ path('app_sortie_delete',{'id':sortie.id}) }}" onclick="return confirm('Etes-vous sûr ?')">supprimer</a>
-
+    </div>
+    </div>
 
 
 
