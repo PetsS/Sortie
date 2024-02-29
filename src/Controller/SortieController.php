@@ -132,10 +132,7 @@ class SortieController extends AbstractController
 
             }
             //$sortie->setEtat('EN ATTENTE');
-            if ($user instanceof User){
-                $sortie->setSite($user->getSite());
-                $sortie->setOrganisateur($user);
-            }
+
 
             $em->persist($sortie);
             $em->flush();

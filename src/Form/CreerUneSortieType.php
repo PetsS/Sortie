@@ -6,7 +6,6 @@ use App\Entity\Adresse;
 use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\User;
-
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -38,16 +37,13 @@ class CreerUneSortieType extends AbstractType
             ->add('dateDebut' , DateTimeType::class, [
                 'required' => false,
 
-
             ])
             ->add('duree', NumberType::class,[
                 'label' => 'Duree',
-
                 'required' => false,
                 ])
             ->add('dateLimiteInscription' , DateTimeType::class, [
                 'required' => false,
-
 
             ])
 
