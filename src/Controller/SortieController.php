@@ -135,14 +135,7 @@ class SortieController extends AbstractController
         $form = $this->createForm(CreerUneSortieType::class, $sortie);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $sortie->setEtat('EN ATTENTE');
-            $sortie->setIsSortieValidee(false);
 
-            if ($user instanceof User) {
-                $sortie->setSite($user->getSite());
-                $sortie->setOrganisateur($user);
-            }
         if ($user instanceof User){
             $sortie->setSite($user->getSite());
             $sortie->setOrganisateur($user);
@@ -185,7 +178,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/update/{id}', name: '_update', requirements: ['id' => '\d+'])]
-    public function update(int $id, SortieRepository $sortieRepository, Request $request, EntityManagerInterface $em): Response
+    public function update(int $id, SortieRepository $sortieRepository, Request $request, EntityManagerInterface $em ,SluggerInterface $slugger): Response
     {
         $sortie = $sortieRepository->find($id);
 
