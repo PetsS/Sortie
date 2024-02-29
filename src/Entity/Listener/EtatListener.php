@@ -2,14 +2,17 @@
 
 namespace App\Entity\Listener;
 use App\Entity\Sortie;
+use Doctrine\ORM\EntityManagerInterface;
 
 class EtatListener
 {
+    private $entityManager;
+    public function __construct(EntityManagerInterface $entityManager) {
+        $this->entityManager = $entityManager;
+    }
 
     public function postLoad(Sortie $sortie): void
     {
-
-
         $dateNow = new \DateTime();
         $dureeMinutes = $sortie->getDuree();
         $dureeSecondes = $dureeMinutes*60;
@@ -28,9 +31,15 @@ class EtatListener
         } elseif (($conversionDuree < $dateNow) & ($dateNow > $sortie->getDateLimiteInscription())){
             $sortie->setEtat('TERMINE');
         }
+
+        $this->entityManager->persist($sortie);
+        $this->entityManager->flush();
     }
 
     public function prePersist(Sortie $sortie) {
         $sortie->setEtat('EN COURS');
+
+        $this->entityManager->persist($sortie);
+        $this->entityManager->flush();
     }
 }
