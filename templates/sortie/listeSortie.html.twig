@@ -3,19 +3,22 @@
 {% block title %}Hello SortieController!{% endblock %}
 
 {% block body %}
-    <div class="border border-5 rounded-bottom shadow-sm p-3 text-center bg-body-tertiary"
-         style="
+    <header>
+        <div class="border border-5 rounded-bottom shadow-sm p-3 text-center bg-body-tertiary"
+             style="
             color: #dbeafe;
             margin-top: 1rem;
             margin-bottom: 1rem;
-            background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');
+            background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/045.webp');
             /*background-repeat: no-repeat;*/
             /*background-attachment: fixed;*/
             background-size: cover;
+            /*max-width: 30rem;*/
             "
-    >
-        <h1 class="display-6 text-center"> Liste des sorties</h1>
-    </div>
+        >
+            <h1 class="display-6 text-center"> Liste des sorties</h1>
+        </div>
+    </header>
 
     <div class="border border-0 rounded p-3"
          style="
@@ -65,7 +68,7 @@
         {% endif %}
     </div>
 
-    <div class="d-flex flex-wrap justify-content-evenly">
+    <div class="d-flex flex-wrap justify-content-center">
         {% for sortie in sorties %}
             <a class="card-link" href="{{ path('app_sortie_detail', {'id': sortie.id}) }}">
                 <div class="m-2 card" style="width: 20rem;">
@@ -85,20 +88,31 @@
                         <p class="card-text">Inscrit: {{ isUserInscrit[sortie.id] ? 'Oui' : 'Non' }}</p>
                         <p class="card-text">
                             Organisateur: {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }}</p>
-                        <div>
+
+                        <div class="pt-3">
 
                             {% if is_granted('ROLE_USER') %}
                                 {% if isUserInscrit[sortie.id] %}
-                                    <a class="btn btn-danger" type="button"
-                                       href="{{ path('app_sortie_desinscription', {'sortie': sortie.id}) }}">Se
-                                        désinscrire</a>
+                                    <a class="btn btn-dark" type="button"
+                                       href="{{ path('app_sortie_desinscription', {'sortie': sortie.id}) }}">
+                                        <i class="bi bi-x-lg"></i></a>
                                 {% else %}
                                     <a class="btn btn-secondary" type="button"
-                                       href="{{ path('app_sortie_inscription', {'sortie': sortie.id}) }}">S'inscrire</a>
+                                       href="{{ path('app_sortie_inscription', {'sortie': sortie.id}) }}">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </a>
                                 {% endif %}
                                 {% if isOrganisateur[sortie.id] or is_granted('ROLE_ADMIN') %}
                                     <a class="btn btn-primary" type="button"
-                                       href="{{ path('app_sortie_update', {'id': sortie.id }) }}">Modifier</a>
+                                       href="{{ path('app_sortie_update', {'id': sortie.id }) }}">
+                                        <i class="bi bi-feather"></i>
+                                    </a>
+                                    <a type="button" class="btn btn-danger"
+                                       href="{{ path('app_sortie_delete', {'id':sortie.id}) }}"
+                                       onclick="return confirm('Etes-vous sûr de vouloir supprimer la sortie ?')">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+
                                 {% endif %}
                             {% endif %}
 

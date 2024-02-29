@@ -19,13 +19,9 @@ class SortieController extends AbstractController
     public function listeSortie(SortieRepository $sortieRepository, Request $request): Response
     {
         $user = $this->getUser();
-        $sortie = new Sortie();
-        $dateNow = new \DateTime();
 
         $form = $this->createForm(SortieType::class, null, ['method' => 'GET']);
         $form->handleRequest($request);
-
-        if (($sortie->getDateDebut() < $dateNow)) {
 
             if ($form->isSubmitted() && $form->isValid()) {
 
@@ -52,11 +48,14 @@ class SortieController extends AbstractController
                 ]);
 
             } else {
+                $dateNow = new \DateTime();
+                $isValidee = true;
                 $sorties = $sortieRepository->findSortiesCourant([
                     'dateNow' => $dateNow,
+                    'isValidee' => $isValidee,
                 ]);
             }
-        }
+
 
         $isUserInscrit = [];
         $isOrganisateur = [];
@@ -135,16 +134,19 @@ class SortieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sortie->setEtat('EN ATTENTE');
+            $sortie->setIsSortieValidee(false);
 
             if ($user instanceof User) {
                 $sortie->setSite($user->getSite());
                 $sortie->setOrganisateur($user);
             }
 
+
+
             $em->persist($sortie);
             $em->flush();
 
-             $this->addFlash('success', 'La sortie a été enregistrée');
+            $this->addFlash('success', 'La sortie a été enregistrée');
 
             return $this->redirectToRoute('app_adresse_create');
 
@@ -199,6 +201,7 @@ class SortieController extends AbstractController
     public function validationListeSortie(SortieRepository $sortieRepository): Response
     {
         $sorties = $sortieRepository ->findBy(['etat' => 'EN ATTENTE']);
+
         return $this->render('sortie/validationSortie.html.twig', [
             'sorties' => $sorties,
         ]);
@@ -208,7 +211,7 @@ class SortieController extends AbstractController
     public function validationSortie(int $id, SortieRepository $sortieRepository, EntityManagerInterface $em): Response
     {
         $sortie = $sortieRepository->find($id);
-        $sortie -> setEtat('OUVERT');
+        $sortie->setIsSortieValidee(true);
 
         $em->persist($sortie);
         $em->flush();

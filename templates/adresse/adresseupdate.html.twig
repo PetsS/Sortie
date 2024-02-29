@@ -1,18 +1,24 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Modifier Adresse - Sortie.com{% endblock %}
+
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
 {% block body %}
-    <h2>Modifier Adresse</h2>
+
+    <h1 class="display-6 text-center">Modifier Adresse</h1>
 
     {{ form_start(form) }}
 
-{#    {{ form_label(form) }}#}
     {{ form_widget(form) }}
     {{ form_errors(form) }}
+
     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
         <button type="submit"class="btn btn-primary">Envoyer</button>
         <a class="btn btn-secondary" onclick="history.back()">Retour</a>
         <a class="btn btn-danger" href="{{ path('app_sortie_liste') }}" >Annuler</a>
     </div>
+
     {{ form_end(form) }}
+
 {% endblock %}
