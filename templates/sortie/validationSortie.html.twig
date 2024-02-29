@@ -1,40 +1,68 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Validation - Sortie.com{% endblock %}
 
 {% block body %}
+    <header>
+        <div class="border border-5 rounded-bottom shadow-sm p-3 text-center bg-body-tertiary"
+             style="
+            color: #dbeafe;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/033.webp');
+            /*background-repeat: no-repeat;*/
+            /*background-attachment: fixed;*/
+            background-size: cover;
+            "
+        >
+            <h1 class="display-6 text-center">Validation des sorties</h1>
+        </div>
+    </header>
 
-    <table class="table table-hover pt-3 border border-5 justify-content-center" id="userTable">
-        <thead>
-        <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">Etat</th>
-            <th scope="col">Campus</th>
-            <th scope="col">Organisateur</th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
+    <div class="justify-content-center">
+        <div class="border border-0 rounded p-3"
+             style="
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                background-color: rgba(255,255,255,0.16);
+                "
+        >
+            <table class="table table-hover" id="userTable">
+                <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Etat</th>
+{#                    <th scope="col">Campus</th>#}
+{#                    <th scope="col">Organisateur</th>#}
+                    <th scope="col"></th>
+                </tr>
+                </thead>
 
-        <tbody class="table-group-divider">
-        {% for sortie in sorties %}
-            <tr style="cursor: pointer" data-href="{{ path('app_sortie_detail', {'id': sortie.id }) }}">
+                <tbody class="table-group-divider">
+                {% for sortie in sorties %}
+                    <tr style="cursor: pointer" data-href="{{ path('app_sortie_detail', {'id': sortie.id }) }}">
 
-                <td> {{ sortie.nom }} </td>
-                <td> {{ sortie.etat }} </td>
-                <td> {{ sortie.site.nom }} </td>
-                <td> {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </td>
+                        <td> {{ sortie.nom }} </td>
+                        <td> {{ sortie.etat }} </td>
+{#                        <td> {{ sortie.site.nom }} </td>#}
+{#                        <td> {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </td>#}
 
-                <td>
-                   {% if sortie.etat != 'FERME'%}  <a class="btn btn-secondary" type="submit" href="{{ path('app_sortie_validation', {'id': sortie.id }) }}">Valider</a> {% endif %}
-                    <a class="btn btn-danger" type="button" href="{{ path('app_sortie_delete', {'id': sortie.id }) }}">Supprimer</a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                        <td>
+                            {% if sortie.etat != 'FERME' %}  <a class="btn btn-primary" type="submit"
+                                                                href="{{ path('app_sortie_validation', {'id': sortie.id }) }}"><i class="bi bi-check-circle-fill"></i></a> {% endif %}
+                            <a class="btn btn-danger" type="button"
+                               href="{{ path('app_sortie_delete', {'id': sortie.id }) }}"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-    <a class="btn btn-secondary" type="button" href="{{ path('app_sortie_liste') }}">Retour</a>
-    <a class="btn btn-primary" type="button" href="{{ path('app_sortie_create') }}">Créer Sortie</a>
+            <a class="btn btn-secondary" type="button" href="{{ path('app_sortie_liste') }}">
+                <i class="bi bi-arrow-return-left"></i>
+            </a>
+        </div>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

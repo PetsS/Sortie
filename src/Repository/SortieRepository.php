@@ -80,7 +80,14 @@ class SortieRepository extends ServiceEntityRepository
 
         if (!empty($criteria['dateNow'])) {
             $qb->andWhere('s.dateDebut > :date')
-                ->setParameter('date', $criteria['dateNow']);
+                ->setParameter('date', $criteria['dateNow'])
+            ;
+        }
+
+        if (!empty($criteria['isValidee'])) {
+            $qb->andWhere('s.isSortieValidee = :bool')
+                ->setParameter('bool', true)
+            ;
         }
 
         return $qb->getQuery()->getResult();

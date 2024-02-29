@@ -1,16 +1,22 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Modifier sortie - Sortie.com{% endblock %}
+
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
 {% block body %}
-    <h1>Modifier la Sortie</h1>
+
+    <h1 class="display-6 text-center">Modifier sortie</h1>
     {{ form_start(form) }}
 
-{#    {{ form_label(form) }}#}
     {{ form_widget(form) }}
     {{ form_errors(form) }}
+
     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
         <button type="submit" class="btn btn-primary">Page suivante (Adresse)</button>
         <a href="{{ path('app_sortie_liste') }}" class="btn btn-danger">Annuler</a>
     </div>
+
     {{ form_end(form) }}
+
 {% endblock %}

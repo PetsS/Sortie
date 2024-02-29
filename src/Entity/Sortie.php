@@ -57,8 +57,8 @@ class Sortie
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'sorties')]
     private Collection $participants;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateFin = null;
+    #[ORM\Column]
+    private ?bool $isSortieValidee = null;
 
     public function __construct()
     {
@@ -214,14 +214,14 @@ class Sortie
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+    public function isIsSortieValidee(): ?bool
     {
-        return $this->dateFin;
+        return $this->isSortieValidee;
     }
 
-    public function setDateFin(?\DateTimeInterface $dateFin): static
+    public function setIsSortieValidee(bool $isSortieValidee): static
     {
-        $this->dateFin = $dateFin;
+        $this->isSortieValidee = $isSortieValidee;
 
         return $this;
     }

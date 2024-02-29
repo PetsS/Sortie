@@ -22,24 +22,23 @@ class EtatListener
         $conversionDuree->setTimestamp($debut->getTimestamp());
         $conversionDuree->add(new \DateInterval('PT' . $dureeMinutes . 'M'));
 
-        if ($sortie->getDateLimiteInscription() >= $dateNow) {
-            $sortie->setEtat('OUVERT');
-        }elseif(($dateNow < $debut) & ($dateNow > $sortie->getDateLimiteInscription())){
-            $sortie->setEtat('FERME');
-        } elseif (($dateNow < $conversionDuree) & ($dateNow > $debut)){
-            $sortie->setEtat('EN COURS');
-        } elseif (($conversionDuree < $dateNow) & ($dateNow > $sortie->getDateLimiteInscription())){
-            $sortie->setEtat('TERMINE');
-        }
+        if ($sortie->isIsSortieValidee()) {
+            if ($sortie->getDateLimiteInscription() >= $dateNow) {
+                $sortie->setEtat('OUVERT');
+            } elseif (($dateNow < $debut) & ($dateNow > $sortie->getDateLimiteInscription())) {
+                $sortie->setEtat('FERME');
+            } elseif (($dateNow < $conversionDuree) & ($dateNow > $debut)) {
+                $sortie->setEtat('EN COURS');
+            } elseif (($conversionDuree < $dateNow) & ($dateNow > $sortie->getDateLimiteInscription())) {
+                $sortie->setEtat('TERMINE');
+            }
 
-        $this->entityManager->persist($sortie);
-        $this->entityManager->flush();
+            $this->entityManager->persist($sortie);
+            $this->entityManager->flush();
+        }
     }
 
     public function prePersist(Sortie $sortie) {
-        $sortie->setEtat('EN COURS');
-
-        $this->entityManager->persist($sortie);
-        $this->entityManager->flush();
+        $sortie->setEtat('EN ATTENTE');
     }
 }

@@ -1,46 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Utilisateurs - Sortie.com{% endblock %}
 
 {% block body %}
+    <header>
+        <div class="border border-5 rounded-bottom shadow-sm p-3 text-center bg-body-tertiary"
+             style="
+            color: #dbeafe;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/040.webp');
+            /*background-repeat: no-repeat;*/
+            /*background-attachment: fixed;*/
+            background-size: cover;
+            "
+        >
+            <h1 class="display-6 text-center"> Gestion des utilisateurs</h1>
+        </div>
+    </header>
 
-    <table class="table table-hover pt-3 border border-5 justify-content-center" id="userTable">
-        <thead>
-        <tr>
-            <th scope="col">Actif</th>
-            <th scope="col">Nom</th>
-            <th scope="col">Prenom</th>
-            <th scope="col">Pseudo</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-
-
-        <tbody class="table-group-divider">
-        {% for user in users %}
-            <tr style="cursor: pointer" data-href="{{ path('app_profil', {'id': user.id }) }}">
-                <td>
-                    {% if user.isActif %}
-                        <i class="bi bi-check-circle text-success"></i>
-                    {% else %}
-                        <i class="bi bi-x-circle text-danger"></i>
-                    {% endif %}
-                </td>
-
-                <td> {{ user.nom }} </td>
-                <td> {{ user.prenom }} </td>
-                <td> {{ user.pseudo }} </td>
-
-                <td>
-                    <a class="btn btn-secondary" type="button" href="{{ path('app_profil_update', {'id': user.id }) }}">Modifier</a>
-                </td>
+    <div class="justify-content-center">
+        <div class="border border-0 rounded p-3"
+             style="
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                background-color: rgba(255,255,255,0.16);
+                "
+        >
+        <table class="table table-hover" id="userTable">
+            <thead>
+            <tr>
+                <th scope="col">Actif</th>
+{#                <th scope="col">Nom</th>#}
+{#                <th scope="col">Prenom</th>#}
+                <th scope="col">Pseudo</th>
+                <th scope="col"></th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
 
-    <a class="btn btn-secondary" type="button" href="{{ path('app_sortie_liste') }}">Retour</a>
-    <a class="btn btn-primary" type="button" href="{{ path('app_profil_creer') }}">Créer Profil</a>
+
+            <tbody class="table-group-divider">
+            {% for user in users %}
+                <tr style="cursor: pointer" data-href="{{ path('app_profil', {'id': user.id }) }}">
+                    <td>
+                        {% if user.isActif %}
+                            <i class="bi bi-check-circle text-success"></i>
+                        {% else %}
+                            <i class="bi bi-x-circle text-danger"></i>
+                        {% endif %}
+                    </td>
+
+{#                    <td> {{ user.nom }} </td>#}
+{#                    <td> {{ user.prenom }} </td>#}
+                    <td> {{ user.pseudo }} </td>
+
+                    <td>
+                        <a class="btn btn-primary" type="button"
+                           href="{{ path('app_profil_update', {'id': user.id }) }}">
+                            <i class="bi bi-feather"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-secondary" type="button" href="{{ path('app_sortie_liste') }}">
+            <i class="bi bi-arrow-return-left"></i>
+        </a>
+        <a class="btn btn-primary" type="button" href="{{ path('app_profil_creer') }}">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+
+        </div>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
