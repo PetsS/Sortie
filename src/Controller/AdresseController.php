@@ -49,9 +49,9 @@ class AdresseController extends AbstractController
             $em->persist($adresse);
             $em->flush();
 
-            $this->addFlash('success', 'La adresse a été enregistrée');
+           // $this->addFlash('success', 'La adresse a été enregistrée');
 
-            return $this->redirectToRoute('app_sortie_liste');
+            return $this->redirectToRoute('app_sortie_create');
 
         }
 

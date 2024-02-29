@@ -72,12 +72,12 @@
         {% for sortie in sorties %}
             <a class="card-link" href="{{ path('app_sortie_detail', {'id': sortie.id}) }}">
                 <div class="m-2 card" style="width: 20rem;">
-                    {#                        {% if sortie.photo %} #}
-                    {#                            <img src="{{ asset(photo_dir ~ '/' ~ sortie.photo) }}" class="card-img-top" alt="image" loading="lazy"/> #}
-                    {#                        {% else %} #}
+                    {% if sortie.photo %}
+                                               <img src="{{ asset(photo_dir ~ '/' ~ sortie.photo) }}" class="card-img-top" alt="image" loading="lazy"/>
+                                          {% else %}
                     <img src="{{ asset(photo_dir ~ '/placeholder_img.png') }}" class="card-img-top" alt="image"
                          loading="lazy"/>
-                    {#                        {% endif %} #}
+                                            {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ sortie.nom }}</h5>
                         <p class="card-text">Date de la sortie: {{ sortie.dateDebut|date('d/m/Y') }}</p>

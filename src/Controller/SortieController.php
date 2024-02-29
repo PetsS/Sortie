@@ -9,11 +9,12 @@ use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-
-
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/sortie', name: 'app_sortie')]
 class SortieController extends AbstractController
 {
@@ -21,6 +22,8 @@ class SortieController extends AbstractController
     public function listeSortie(SortieRepository $sortieRepository, Request $request): Response
     {
         $user = $this->getUser();
+        $sortie = new Sortie();
+        $dateNow = new \DateTime();
 
         $form = $this->createForm(SortieType::class, null, ['method' => 'GET']);
         $form->handleRequest($request);
@@ -123,10 +126,8 @@ class SortieController extends AbstractController
 
         ]);
     }
-
-       #[Route('/create', name: '_create')]
-    public function create(Request $request, EntityManagerInterface $em): Response
-
+    #[Route('/create', name: '_create')]
+    public function create(Request $request, EntityManagerInterface $em,sluggerInterface $slugger): Response
     {
         $sortie = new Sortie();
         $user = $this->getUser();
@@ -142,11 +143,32 @@ class SortieController extends AbstractController
                 $sortie->setSite($user->getSite());
                 $sortie->setOrganisateur($user);
             }
+        if ($user instanceof User){
+            $sortie->setSite($user->getSite());
+            $sortie->setOrganisateur($user);
+        }
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!empty($form->get('photo')) && $form->get('photo')->getData() instanceof UploadedFile) {
+                $dir = $this->getParameter('photo_dir');
+                $photoFile = $form->get('photo')->getData();
+                $fileName = $slugger->slug($sortie->getnom()) . '-' . uniqid() . '.' . $photoFile->guessExtension();
+                $photoFile->move($dir, $fileName);
+
+                if ($sortie->getPhoto() && \file_exists($dir . '/' . $sortie->getPhoto())) {
+                    unlink($dir . '/' . $sortie->getPhoto());
+                }
+
+                $sortie->setPhoto($fileName);
+
+            }
+            //$sortie->setEtat('EN ATTENTE');
 
 
             $em->persist($sortie);
             $em->flush();
+            $this->addFlash('success', 'La sortie a été enregistrée');
+            return $this->redirectToRoute('app_sortie_liste');
 
             $this->addFlash('success', 'La sortie a été enregistrée');
 
@@ -172,9 +194,21 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!empty($form->get('photo')) && $form->get('photo')->getData() instanceof UploadedFile) {
+                $dir = $this->getParameter('photo_dir');
+                $photoFile = $form->get('photo')->getData();
+                $fileName = $slugger->slug($sortie->getnom()) . '-' . uniqid() . '.' . $photoFile->guessExtension();
+                $photoFile->move($dir, $fileName);
+
+                if ($sortie->getPhoto() && \file_exists($dir . '/' . $sortie->getPhoto())) {
+                    unlink($dir . '/' . $sortie->getPhoto());
+                }
+                $sortie->setPhoto($fileName);
+            }
 
             $em->persist($sortie);
             $em->flush();
+            $this->addFlash('success', 'La sortie a été modifié');
 
             $this->addFlash('success', 'La sortie a été modifié.');
             return $this->redirectToRoute('app_adresse_update', ['id' => $id]);
@@ -187,7 +221,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: '_delete', requirements: ['id' => '\d+'])]
-    //#[IsGranted('ROLE_ADMIN')]
+//#[IsGranted('ROLE_ADMIN')]
     public function supprimer(Sortie $sortie, EntityManagerInterface $em): Response
     {
 
@@ -214,6 +248,9 @@ class SortieController extends AbstractController
     {
         $sortie = $sortieRepository->find($id);
         $sortie->setIsSortieValidee(true);
+
+
+
 
         $em->persist($sortie);
         $em->flush();

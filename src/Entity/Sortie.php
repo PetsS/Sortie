@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Listener\EtatListener;
+
 use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,22 +22,28 @@ class Sortie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'Le champs ne peux pas être vide', groups: ['creation'])]
+    #[Assert\NotNull(message: 'Veuillez reseigner un nom de sortie')]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Assert\GreaterThan(propertyPath: 'dateLimiteInscription',message: 'la date ne peut pas être inférieur')]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column]
+    #[Assert\Type(type: Types::INTEGER, message:'Veuillez saisir la duree en minutes')]
+    #[Assert\NotBlank(message: 'peut pas etre nul')]
     private ?int $duree = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull(message: 'la date ne peut pas être supérieur')]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
+    #[Assert\Type(type: Types::INTEGER, message:'Veuillez saisir le nombre d\'inscription possible')]
     private ?int $nbMaxInscription = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull()]
     private ?string $infosSortie = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -59,6 +66,9 @@ class Sortie
 
     #[ORM\Column]
     private ?bool $isSortieValidee = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo = null;
 
     public function __construct()
     {
@@ -222,6 +232,18 @@ class Sortie
     public function setIsSortieValidee(bool $isSortieValidee): static
     {
         $this->isSortieValidee = $isSortieValidee;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): static
+    {
+        $this->photo = $photo;
 
         return $this;
     }

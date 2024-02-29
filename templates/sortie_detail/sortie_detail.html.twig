@@ -4,8 +4,29 @@
 
 {% block body %}
 
- <h1 class="display-6 text-center">Détails sortie</h1>
+    <h1>Detail  Sortie</h1>
+    <br>
+    <br>
 
+    <div class="row g-0">
+    <div class="col-md-4">
+    {% if sortie.photo %}
+        <img src="{{ asset(photo_dir ~ '/' ~ sortie.photo) }}" class="card-img-top" alt="image"
+
+             loading="lazy"/>
+
+    {% else %}
+        <img src="{{ asset(photo_dir ~ '/placeholder_profil_img.png') }}" class="card-img-top"
+
+             alt="image"
+
+             loading="lazy"/>
+
+    {% endif %}
+
+
+    </div>
+    </div>
      <p> Nom de la sortie: {{ sortie.nom }}</p>
      <p> Date et heure de la sortie: {{ sortie.dateDebut| date('d/m/y H:i')}} </p>
      <p> Date limite d'inscription: {{ sortie.dateLimiteInscription| date('d/m/y H:i') }}</p>
@@ -21,6 +42,11 @@
 {#     <p>Latitude: {{ sortie.adresse.latitude }}</p>#}
 {#     <p>Longitude: {{ sortie.adresse.longitude }}</p>#}
 
- <a type="button" class="btn btn-primary" href="{{ path('app_sortie_update', {'id' : sortie.id }) }}">Modifier</a>
+
+    <a type="button" class="btn btn-primary" href="{{ path('app_sortie_update', {'id' : sortie.id }) }}">Modifier</a>
+    <a type="button" class="btn btn-danger" href="{{ path('app_sortie_delete',{'id':sortie.id}) }}" onclick="return confirm('Etes-vous sûr ?')">supprimer</a>
+
+
+
 
 {% endblock %}
