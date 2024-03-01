@@ -46,7 +46,9 @@
                         <li class="btn btn-sm btn-outline-secondary">
                             <a class="nav-link" href="{{ path('app_profil_liste') }}">Gestion d'Utilisateur</a>
                         </li>
-                        {#                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="#">Les Campus</a></li> #}
+                        <li class="btn btn-sm btn-outline-secondary">
+                            <a class="nav-link" href="{{ path('app_site_liste') }}">Campus</a>
+                        </li>
 
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED') %}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}Création Campus - Sortie.com{% endblock %}
+
+{% block body %}
+    <h1 class="display-6 text-center">Création Campus</h1>
+
+    <div class="d-flex justify-content-center">
+        <div class="border border-0 rounded p-3"
+             style="
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                background-color: rgba(255,255,255,0.16);
+                "
+        >
+            {{ form_start(form) }}
+
+            {{ form_row(form.nom) }}
+
+            {{ form_widget(form.return) }} {{ form_widget(form.submit) }}
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

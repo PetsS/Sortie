@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Campus - Sortie.com{% endblock %}
+
+{% block body %}
+    <header>
+        <div class="border border-5 rounded-bottom shadow-sm p-3 text-center bg-body-tertiary"
+             style="
+            color: #dbeafe;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/049.webp');
+            /*background-repeat: no-repeat;*/
+            /*background-attachment: fixed;*/
+            background-size: cover;
+            "
+        >
+            <h1 class="display-6 text-center">Gestion des campuses</h1>
+        </div>
+    </header>
+
+    <div class="justify-content-center">
+        <div class="border border-0 rounded p-3"
+             style="
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                background-color: rgba(255,255,255,0.16);
+                "
+        >
+            <table class="table table-hover" id="userTable">
+                <thead>
+                <tr>
+                    <th scope="col">Campus</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+
+
+                <tbody class="table-group-divider">
+                {% for site in sites %}
+                    <tr>
+                        <td> {{ site.nom }} </td>
+                        <td>
+                            <a class="btn btn-primary" type="button"
+                               href="{{ path('app_site_update', {'id': site.id }) }}">
+                                <i class="bi bi-feather"></i>
+                            </a>
+                            <a class="btn btn-danger" type="button"
+                               href="{{ path('app_site_delete', {'id': site.id }) }}">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a class="btn btn-secondary" type="button" href="{{ path('app_sortie_liste') }}">
+                <i class="bi bi-arrow-return-left"></i>
+            </a>
+            <a class="btn btn-primary" type="button" href="{{ path('app_site_create') }}">
+                <i class="bi bi-plus-lg"></i>
+            </a>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const table = document.getElementById("userTable");
+            const rows = table.getElementsByTagName("tr");
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                row.addEventListener("click", function () {
+                    const href = this.getAttribute("data-href");
+                    if (href) {
+                        window.location.href = href;
+                    }
+                });
+            }
+        });
+    </script>
+
+{% endblock %}
