@@ -22,8 +22,6 @@ class SortieController extends AbstractController
     public function listeSortie(SortieRepository $sortieRepository, Request $request): Response
     {
         $user = $this->getUser();
-        $sortie = new Sortie();
-        $dateNow = new \DateTime();
 
         $form = $this->createForm(SortieType::class, null, ['method' => 'GET']);
         $form->handleRequest($request);
@@ -51,7 +49,7 @@ class SortieController extends AbstractController
                     'datePasse' => $datePasse
 
                 ]);
-
+//dd($site);
             } else {
                 $dateNow = new \DateTime();
                 $isValidee = true;
@@ -127,7 +125,7 @@ class SortieController extends AbstractController
         ]);
     }
     #[Route('/create', name: '_create')]
-    public function create(Request $request, EntityManagerInterface $em,sluggerInterface $slugger): Response
+    public function create(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
         $sortie = new Sortie();
         $user = $this->getUser();
@@ -135,13 +133,15 @@ class SortieController extends AbstractController
         $form = $this->createForm(CreerUneSortieType::class, $sortie);
         $form->handleRequest($request);
 
-
-        if ($user instanceof User){
-            $sortie->setSite($user->getSite());
-            $sortie->setOrganisateur($user);
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $sortie->setEtat('EN ATTENTE');
+            $sortie->setIsSortieValidee(false);
+
+            if ($user instanceof User){
+                $sortie->setSite($user->getSite());
+                $sortie->setOrganisateur($user);
+            }
+
             if (!empty($form->get('photo')) && $form->get('photo')->getData() instanceof UploadedFile) {
                 $dir = $this->getParameter('photo_dir');
                 $photoFile = $form->get('photo')->getData();
@@ -153,28 +153,19 @@ class SortieController extends AbstractController
                 }
 
                 $sortie->setPhoto($fileName);
-
             }
-            //$sortie->setEtat('EN ATTENTE');
-
 
             $em->persist($sortie);
             $em->flush();
-            $this->addFlash('success', 'La sortie a été enregistrée');
-            return $this->redirectToRoute('app_sortie_liste');
 
             $this->addFlash('success', 'La sortie a été enregistrée');
-
             return $this->redirectToRoute('app_sortie_liste');
 
         }
 
         return $this->render('sortie_detail/edit.html.twig', [
-
             'form' => $form
-
         ]);
-
     }
 
     #[Route('/update/{id}', name: '_update', requirements: ['id' => '\d+'])]

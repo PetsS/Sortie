@@ -4,49 +4,47 @@
 
 {% block body %}
 
-    <h1>Detail  Sortie</h1>
-    <br>
-    <br>
+    <div class="d-flex flex-wrap justify-content-center pt-3">
+        <div class="card custom-card" style="max-width: 30rem;">
+            {% if sortie.photo %}
+                <img src="{{ asset(photo_dir ~ '/' ~ sortie.photo) }}" class="card-img-top" alt="image" loading="lazy"/>
+            {% else %}
+                <img src="{{ asset(photo_dir ~ '/placeholder_profil_img.png') }}" class="card-img-top" alt="image"
+                     loading="lazy"/>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ sortie.nom }}</h5>
+                <p class="card-text fst-italic"> {{ sortie.etat }}</p>
 
-    <div class="row g-0">
-    <div class="col-md-4">
-    {% if sortie.photo %}
-        <img src="{{ asset(photo_dir ~ '/' ~ sortie.photo) }}" class="card-img-top" alt="image"
-
-             loading="lazy"/>
-
-    {% else %}
-        <img src="{{ asset(photo_dir ~ '/placeholder_profil_img.png') }}" class="card-img-top"
-
-             alt="image"
-
-             loading="lazy"/>
-
-    {% endif %}
-
-
+                <p> Date et heure de la sortie: {{ sortie.dateDebut | date('d/m/y H:i') }} </p>
+                <p> Date limite d'inscription: {{ sortie.dateLimiteInscription | date('d/m/y H:i') }}</p>
+                <p> Inscriptions: {{ sortie.participants|length }} / {{ sortie.nbMaxInscription }}</p>
+                <p> Durée: {{ sortie.duree }}</p>
+                <p> Description et infos: </p>
+                <div class="card-body">
+                    <p>{{ sortie.infosSortie }}</p>
+                </div>
+                <p> Adresse: </p>
+                <div class="card-body">
+                    <p>{{ sortie.adresse.nomLieu }} <br>
+                        {{ sortie.adresse.numeroRue }}, {{ sortie.adresse.rue }} <br>
+                        {{ sortie.adresse.codePostal }} {{ sortie.adresse.ville }}
+                    </p>
+                </div>
+                <div>
+                    <a class="btn btn-secondary" type="button" onclick="history.back()">
+                        <i class="bi bi-arrow-return-left"></i>
+                    </a>
+                    <a type="button" class="btn btn-primary"
+                       href="{{ path('app_sortie_update', {'id' : sortie.id }) }}">
+                        <i class="bi bi-feather"></i>
+                    </a>
+                    <a type="button" class="btn btn-danger" href="{{ path('app_sortie_delete',{'id':sortie.id}) }}"
+                       onclick="return confirm('Etes-vous sûr de vouloir supprimer la sortie ?')">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-     <p> Nom de la sortie: {{ sortie.nom }}</p>
-     <p> Date et heure de la sortie: {{ sortie.dateDebut| date('d/m/y H:i')}} </p>
-     <p> Date limite d'inscription: {{ sortie.dateLimiteInscription| date('d/m/y H:i') }}</p>
-     <p> Nombre de places: {{ sortie.nbMaxInscription }}</p>
-      <p>etat de sortie: {{ sortie.etat }}</p>
-     <p> Durée: {{ sortie.duree }}</p>
-     <p> Description et infos: {{ sortie.infosSortie }}</p>
-     <p>Nom lieu: {{ sortie.adresse.nomLieu }}</p>
-     <p> Rue: {{ sortie.adresse.rue}} </p>
-     <p> Code Postal: {{sortie.adresse.codePostal}}</p>
-     <p> Ville: {{ sortie.adresse.ville}}</p>
-     <p> Numero de Rue: {{ sortie.adresse.numeroRue }}</p>
-{#     <p>Latitude: {{ sortie.adresse.latitude }}</p>#}
-{#     <p>Longitude: {{ sortie.adresse.longitude }}</p>#}
-
-
-    <a type="button" class="btn btn-primary" href="{{ path('app_sortie_update', {'id' : sortie.id }) }}">Modifier</a>
-    <a type="button" class="btn btn-danger" href="{{ path('app_sortie_delete',{'id':sortie.id}) }}" onclick="return confirm('Etes-vous sûr ?')">supprimer</a>
-
-
-
-
 {% endblock %}

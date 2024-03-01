@@ -13,12 +13,15 @@ use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SortieType extends AbstractType
 {
@@ -29,11 +32,9 @@ class SortieType extends AbstractType
                 'label' => 'Rechercher:',
                 'required' => false,
                 'attr' => [
-
                     'class' => 'form-control mr-sm-2',
                     'placeholder' => 'Le nom de la sortie contient...'
                 ],
-
 //                'constraints' =>[
 //                    new NotBlank([
 //                        'message' => 'Le nom de la sortie ne peut pas être vide.',
@@ -154,23 +155,23 @@ class SortieType extends AbstractType
                     'class' => 'btn btn-primary mr-2'
                 ]
             ])
-
-            ->add('photo', FileType::class, [
-                'required' => false,
-                'mapped' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/jpg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => "Ce format n'est pas bon",
-                        'maxSizeMessage' => "Ce fichier est trop lourd"
-                    ])
-                ]
-            ]);
+//            ->add('photo', FileType::class, [
+//                'required' => false,
+//                'mapped' => false,
+//                'constraints' => [
+//                    new File([
+//                        'maxSize' => '1024k',
+//                        'mimeTypes' => [
+//                            'image/jpeg',
+//                            'image/jpg',
+//                            'image/png',
+//                        ],
+//                        'mimeTypesMessage' => "Ce format n'est pas bon",
+//                        'maxSizeMessage' => "Ce fichier est trop lourd"
+//                    ])
+//                ]
+//            ])
+        ;
 
 
     }

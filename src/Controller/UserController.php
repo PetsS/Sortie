@@ -134,7 +134,7 @@ class UserController extends AbstractController
 
         $this->addFlash('success', 'Utilisateur a été supprimer!');
 
-        return $this->redirectToRoute('app_sortie_liste');
+        return $this->redirectToRoute('app_profil_liste');
     }
 
 

@@ -6,8 +6,21 @@
 
 {% block body %}
 
-    <h1 class="display-6 text-center">Création adresse</h1>
+    <h1 class="display-6 text-center">Créer une sortie</h1>
+    <div class="d-flex justify-content-center text-center">
+        <div class="border border-0 rounded p-3"
+             style="
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                background-color: rgba(255,255,255,0.16);
+                "
+        >
+            <a class="btn btn-primary" href="{{ path('app_sortie_create') }}">Page suivante <i class="bi bi-arrow-right"></i></a>
+            <span>ou créez un adresse.</span>
+        </div>
+    </div>
 
+    <h3 class="display-6 text-center">Nouvelle adresse</h3>
     <div class="d-flex justify-content-center">
         <div class="border border-0 rounded p-3"
              style="
@@ -21,11 +34,11 @@
             {{ form_widget(form) }}
             {{ form_errors(form) }}
 
-{#            <div class="btn-group" role="group" aria-label="Basic mixed styles example">#}
-{#                <button type="submit" class="btn btn-primary">Envoyer</button>#}
-{#                <a class="btn btn-secondary" onclick="history.back()">Retour</a>#}
-{#                <a class="btn btn-danger" href="{{ path('app_sortie_liste') }}">Annuler</a>#}
-{#            </div>#}
+            {#            <div class="btn-group" role="group" aria-label="Basic mixed styles example"> #}
+            {#                <button type="submit" class="btn btn-primary">Envoyer</button> #}
+            {#                <a class="btn btn-secondary" onclick="history.back()">Retour</a> #}
+            {#                <a class="btn btn-danger" href="{{ path('app_sortie_liste') }}">Annuler</a> #}
+            {#            </div> #}
 
             <a class="btn btn-secondary" onclick="history.back()">Retour</a>
             <button type="submit" class="btn btn-primary">Envoyer</button>

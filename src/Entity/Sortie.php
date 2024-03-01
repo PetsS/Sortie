@@ -22,28 +22,21 @@ class Sortie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotNull(message: 'Veuillez reseigner un nom de sortie')]
     private ?string $nom = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Assert\GreaterThan(propertyPath: 'dateLimiteInscription',message: 'la date ne peut pas être inférieur')]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateDebut = null;
 
-    #[ORM\Column]
-    #[Assert\Type(type: Types::INTEGER, message:'Veuillez saisir la duree en minutes')]
-    #[Assert\NotBlank(message: 'peut pas etre nul')]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $duree = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotNull(message: 'la date ne peut pas être supérieur')]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
-    #[ORM\Column]
-    #[Assert\Type(type: Types::INTEGER, message:'Veuillez saisir le nombre d\'inscription possible')]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $nbMaxInscription = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotNull()]
     private ?string $infosSortie = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -121,7 +114,7 @@ class Sortie
         return $this->dateLimiteInscription;
     }
 
-    public function setDateLimiteInscription(\DateTimeInterface $dateLimiteInscription): static
+    public function setDateLimiteInscription(?\DateTimeInterface $dateLimiteInscription): static
     {
         $this->dateLimiteInscription = $dateLimiteInscription;
 

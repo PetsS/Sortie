@@ -28,7 +28,7 @@ class UserType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'required' => false,
-                'label' => 'Mail',
+                'label' => 'E-mail adresse :',
                 'attr' => ['autocomplete' => 'email']
             ])
             ->add('plainPassword', RepeatedType::class, [
@@ -59,19 +59,19 @@ class UserType extends AbstractType
                 'mapped' => false,
             ])
             ->add('nom', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'Votre nom :',
                 'required' => false
             ])
             ->add('prenom', TextType::class, [
-                'label' => 'Prenom',
+                'label' => 'Votre prénom :',
                 'required' => false
             ])
             ->add('pseudo', TextType::class, [
-                'label' => 'Pseudo',
+                'label' => 'Pseudo :',
                 'required' => false
             ])
             ->add('telephone', TextType::class, [
-                'label' => 'Téléphone',
+                'label' => 'Numéro de téléphone :',
                 'required' => false
             ])
             ->add('isActif', CheckboxType::class, [
@@ -80,6 +80,7 @@ class UserType extends AbstractType
             ])
             ->add('photo', FileType::class, [
                 'required' => false,
+                'label' => 'Pohot de votre profil :',
                 'mapped' => false,
                 'constraints' => [
                     new File([
@@ -95,7 +96,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('site', EntityType::class, [
-                'label' => 'Campus',
+                'label' => 'Campus :',
                 'class' => Site::class,
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisissez un campus',

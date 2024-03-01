@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Adresse;
+use App\Entity\Sortie;
 use App\Form\AdresseType;
 use App\Form\CreerUneSortieType;
 use App\Repository\AdresseRepository;
@@ -42,30 +43,23 @@ class AdresseController extends AbstractController
         $adresse = new Adresse();
 
         $form = $this->createForm(AdresseType::class, $adresse);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $em->persist($adresse);
             $em->flush();
 
-           // $this->addFlash('success', 'La adresse a été enregistrée');
-
             return $this->redirectToRoute('app_sortie_create');
-
         }
 
         return $this->render('adresse/editadresse.html.twig', [
-
             'form' => $form
-
         ]);
-
-
     }
 
     #[Route('/update/{id}', name: '_update', requirements: ['id' => '\d+'])]
-    public function update(int $id, AdresseRepository $adresseRepository, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    public function update(int $id, AdresseRepository $adresseRepository, Request $request, EntityManagerInterface $em): Response
     {
         $adresse = $adresseRepository->find($id);
 
@@ -80,7 +74,7 @@ class AdresseController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'L\'adresse a été modifié');
-            return $this->redirectToRoute('app_sortie_liste', ['id' => $id]);
+            return $this->redirectToRoute('app_sortie_liste');
         }
 
         return $this->render('adresse/adresseupdate.html.twig', [
@@ -88,9 +82,6 @@ class AdresseController extends AbstractController
             'adresse' => $adresse
         ]);
     }
-
-
-
 
 }
 
