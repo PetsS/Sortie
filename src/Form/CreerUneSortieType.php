@@ -34,7 +34,7 @@ class CreerUneSortieType extends AbstractType
                     'class' => 'special-class',
                 ],
                 'constraints' => [
-                    new NotBlank(message: 'Veuillez reseigner un nom de sortie')
+                    new NotBlank(message: 'Veuillez reseigner le nom de votre sortie')
                 ]
             ])
             ->add('dateDebut', DateTimeType::class, [
@@ -45,7 +45,7 @@ class CreerUneSortieType extends AbstractType
 //                        'propertyPath' => 'dateLimiteInscription',
 //                        'message' => 'la date ne peut pas être inférieur'
 //                    ])
-                    new NotNull(message: 'la date ne peut pas être inférieur'),
+                    new NotNull(message: 'la date ne peut pas être inférieure à la date d\'inscription'),
                 ]
             ])
             ->add('duree', NumberType::class, [
@@ -53,21 +53,21 @@ class CreerUneSortieType extends AbstractType
                 'required' => false,
                 'constraints' => [
 //                    new Type(type: Types::INTEGER, message: 'Veuillez saisir la duree en minutes'),
-                    new NotNull(message: 'peut pas etre nul')
+                    new NotNull(message: 'ce champs ne peux pas être vide')
                 ]
             ])
             ->add('dateLimiteInscription', DateTimeType::class, [
                 'required' => false,
                 'label' => 'Date limite de l\'inscription :',
                 'constraints' => [
-                    new NotNull(message: 'la date ne peut pas être supérieur'),
+                    new NotNull(message: 'la date d\'inscription ne peut pas être supérieure à la date de la sortie'),
                 ]
             ])
             ->add('nbMaxInscription', NumberType::class, [
                 'required' => false,
                 'label' => 'Max nombre de personnes :',
                 'constraints' => [
-                    new NotNull(message: 'Veuillez saisir le nombre d\'inscription possible')
+                    new NotNull(message: 'Veuillez saisir le nombre de participants maximum')
                 ]
             ])
             ->add('infosSortie', TextareaType::class, [
@@ -77,7 +77,7 @@ class CreerUneSortieType extends AbstractType
                     'rows' => 5
                 ],
                 'constraints' => [
-                    new NotBlank(message: 'peut pas etre vide')
+                    new NotBlank(message: 'veuillez-renseigner les informations liées à votre sortie')
                 ]
             ])
 //            ->add('etat',ChoiceType::class ,[
