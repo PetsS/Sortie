@@ -30,7 +30,7 @@ class AdresseController extends AbstractController
     {
         $adresse= $adresseRepository->find($id);
 
-        return $this->render('adresse/index.html.twig', [
+        return $this->render('adresse/listeSite.html.twig', [
             'adresse' => $adresse
 
         ]);
