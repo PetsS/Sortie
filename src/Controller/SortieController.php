@@ -49,7 +49,7 @@ class SortieController extends AbstractController
                     'datePasse' => $datePasse
 
                 ]);
-//dd($site);
+
             } else {
                 $dateNow = new \DateTime();
                 $isValidee = true;
@@ -158,7 +158,7 @@ class SortieController extends AbstractController
             $em->persist($sortie);
             $em->flush();
 
-            $this->addFlash('success', 'La sortie a été enregistrée');
+            $this->addFlash('success', 'La sortie a été enregistrée. Elle est en attente de la validation de l\'admin!');
             return $this->redirectToRoute('app_sortie_liste');
 
         }
