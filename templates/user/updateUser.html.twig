@@ -6,7 +6,7 @@
 
 {% block body %}
 
-    <h1 class="display-6 text-center">Mettre à jour {{ user.pseudo }}</h1>
+    <h1 class="pt-3 display-6 text-center">Mettre à jour {{ user.pseudo }}</h1>
 
     <div class="d-flex justify-content-center">
         <div class="border border-0 rounded p-3"
@@ -23,11 +23,9 @@
             {{ form_row(form.prenom) }}
             {{ form_row(form.telephone) }}
             {{ form_row(form.email) }}
-            {{ form_row(form.plainPassword) }}
             {{ form_row(form.photo) }}
             {{ form_row(form.site) }}
             {{ form_row(form.isActif) }}
-
 
             {{ form_widget(form.return) }} {{ form_widget(form.submit) }}
 

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\UserUpdateType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,8 +22,6 @@ class UserController extends AbstractController
     public function listeProfil(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
-
-//        dd($user);
 
         return $this->render('user/listeProfil.html.twig', [
             'users' => $users
@@ -47,7 +45,12 @@ class UserController extends AbstractController
 
     #[Route('/creer', name: '_creer')]
     #[IsGranted('ROLE_ADMIN')]
-    public function creer(Request $request, EntityManagerInterface $em, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function creer(
+        Request $request,
+        EntityManagerInterface $em,
+        SluggerInterface $slugger,
+        UserPasswordHasherInterface $userPasswordHasher
+    ): Response
     {
         $user = new User();
 
@@ -90,7 +93,7 @@ class UserController extends AbstractController
     {
         $user = $userRepository->find($id);
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserUpdateType::class, $user);
 
         $form->handleRequest($request);
 
@@ -107,7 +110,6 @@ class UserController extends AbstractController
                 }
 
                 $user->setPhoto($fileName);
-
             }
 
             $em->persist($user);

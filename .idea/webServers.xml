@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="21875529-aca0-4663-a0e6-a7a4761c9321" name="vs2.abplusz.hu" url="http://vs2.abplusz.hu">
+        <fileTransfer rootFolder="/public_html" accessType="FTPS" host="vs2.abplusz.hu" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

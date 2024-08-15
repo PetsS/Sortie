@@ -24,11 +24,19 @@
             "
     >
         <div class="container-fluid">
+            {% if is_granted('IS_AUTHENTICATED') %}
             <a class="navbar-brand display-6" href="{{ path('app_sortie_liste') }}">
                 <img src="{{ asset('img/log-eni.png') }}" alt="logo" width="50"
                      class="d-inline-block align-text-center">
                 Sortie.com
             </a>
+            {% else %}
+            <a class="navbar-brand display-6" href="{{ path('app_login') }}">
+                <img src="{{ asset('img/log-eni.png') }}" alt="logo" width="50"
+                     class="d-inline-block align-text-center">
+                Sortie.com
+            </a>
+            {% endif %}
             {#            {% if is_granted('IS_AUTHENTICATED') %} #}
             {#                <span>Bienvenue {{ app.user.nom }} {{ app.user.prenom }} [{% for role in app.user.roles %} {{ role }} {% endfor %}]</span> #}
             {#            {% endif %} #}
@@ -39,6 +47,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav d-flex gap-2 ms-auto mb-2 mb-lg-0">
+
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="btn btn-sm btn-outline-secondary">
                             <a class="nav-link" href="{{ path('app_sortie_validationListe') }}">Validation</a>
@@ -49,8 +58,8 @@
                         <li class="btn btn-sm btn-outline-secondary">
                             <a class="nav-link" href="{{ path('app_site_liste') }}">Campus</a>
                         </li>
-
                     {% endif %}
+
                     {% if is_granted('IS_AUTHENTICATED') %}
                         <li class="btn btn-sm btn-outline-secondary">
                             <a class="nav-link"
@@ -62,9 +71,10 @@
                         <li class="btn btn-sm btn-outline-danger">
                             <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
                         </li>
-
                     {% else %}
                         <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                        </li>
+                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
                         </li>
                     {% endif %}
                 </ul>

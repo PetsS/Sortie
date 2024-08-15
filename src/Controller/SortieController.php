@@ -72,7 +72,7 @@ class SortieController extends AbstractController
             'sorties' => $sorties,
             'isUserInscrit' => $isUserInscrit,
             'isOrganisateur' => $isOrganisateur,
-            'form' => $form
+            'form' => $form->createView()
         ]);
     }
 
@@ -125,7 +125,11 @@ class SortieController extends AbstractController
         ]);
     }
     #[Route('/create', name: '_create')]
-    public function create(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    public function create(
+        Request $request,
+        EntityManagerInterface $em,
+        SluggerInterface $slugger
+    ): Response
     {
         $sortie = new Sortie();
         $user = $this->getUser();

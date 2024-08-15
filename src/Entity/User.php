@@ -22,8 +22,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\Email( message: 'L\'email {{ value }} n\'est pas un email valid.')]
-    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
+//    #[Assert\Email( message: 'L\'email {{ value }} n\'est pas un email valid.')]
+//    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -36,18 +36,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 50, nullable: false)]
-    #[Assert\Length(min: 3, minMessage: "La longueur doit être au moins de {{ limit }} caractères.")]
-    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
+//    #[Assert\Length(min: 3, minMessage: "La longueur doit être au moins de {{ limit }} caractères.")]
+//    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 50, nullable: false)]
-    #[Assert\Length(min: 3, minMessage: "La longueur doit être au moins de {{ limit }} caractères.")]
-    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
+//    #[Assert\Length(min: 3, minMessage: "La longueur doit être au moins de {{ limit }} caractères.")]
+//    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 20, unique: true)]
-    #[Assert\Length(max: 20, maxMessage: "La longueur de pseudo doit être moins de {{ limit }} caractères.")]
-    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
+//    #[Assert\Length(max: 20, maxMessage: "La longueur de pseudo doit être moins de {{ limit }} caractères.")]
+//    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 20, nullable: true)]
@@ -61,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(targetEntity:Site::class,inversedBy:'users')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank(message: "Choisissez un campus.")]
+//    #[Assert\NotBlank(message: "Choisissez un campus.")]
     private ?Site $site = null;
 
     #[ORM\OneToMany(targetEntity: Sortie::class, mappedBy: 'organisateur', orphanRemoval: true)]
